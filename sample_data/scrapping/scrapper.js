@@ -31,16 +31,16 @@ fs.readFile(filePath, {
                 const item = lists[i].getElementsByClassName("lister-item-content")[0];
                 const x = new Movie();
                 x.title = quote(item.getElementsByClassName("lister-item-header")[0].getElementsByTagName("a")[0].innerHTML);
-                x.year = quote(filePath.split("/")[8].split("_")[0]);
+                x.year = (filePath.split("/")[8].split("_")[0]);
                 x.genre = quote(item.getElementsByClassName("text-muted")[1].getElementsByClassName("genre")[0].innerHTML.trim());
-                x.img_path = quote(lists[i].getElementsByClassName("lister-item-image")[0].children[0].children[0].src);
+                x.img_path = quote(lists[i].getElementsByClassName("lister-item-image")[0].children[0].children[0].getAttribute("loadlate"));
                 x.synopsis = quote(item.getElementsByClassName("text-muted")[2].innerHTML.trim());
                 movies.push(x);
             }
             const header = "title, year, genre, img_path, synopsis\n";
             const csv = header + movies.map((x) => x.toString()).join("\n");
             
-            fs.writeFile(__dirname + "/output.csv", csv, function(err) {
+            fs.writeFile(__dirname + "/video.csv", csv, function(err) {
                 if(err) {
                     return console.log(err);
                 }
