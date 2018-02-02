@@ -1,0 +1,14 @@
+{
+  "name": "scrapping",
+  "version": "1.0.0",
+  "description": "Scrape html data into csv",
+  "main": "scrapper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "WJHau",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "jsdom": "^11.6.2"
+  }
+}
