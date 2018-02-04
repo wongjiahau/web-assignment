@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "Copying ./home to /var/www/html/"
-sudo cp -Rv ./home /var/www/html/ 
