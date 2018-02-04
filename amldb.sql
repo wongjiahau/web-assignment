@@ -8,6 +8,8 @@ create table admin_data (
     password_hash varchar(50) -- hash of the admin password
 ) engine = InnoDB;
 
+insert into admin_data values("admin", "1234");
+
 create table video (
     video_id int not null auto_increment primary key,
     title varchar(100) not null,
