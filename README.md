@@ -1,4 +1,9 @@
 # web-assignment
+## How to launch this website?
+Create a symbolic link in the server root to `./home`;
+```
+sudo ln -s ~/Repos/web-assignment/home/ ./home
+```
 
 ## Configuration
 ### MySQL version
