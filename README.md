@@ -42,3 +42,6 @@ Zend Engine v3.0.0, Copyright (c) 1998-2017 Zend Technologies
 ``` sh
 bash ./init_database.sh
 ```
+
+## References
+- https://jonsuh.com/blog/securely-hash-passwords-with-php/
