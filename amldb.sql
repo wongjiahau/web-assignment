@@ -5,10 +5,10 @@ use aml;
 
 create table admin_data (
     admin_id varchar(7) not null primary key,
-    password_hash varchar(50) -- hash of the admin password
+    password_hash varchar(80) -- hash of the admin password
 ) engine = InnoDB;
 
-insert into admin_data values("admin", "1234");
+insert into admin_data values("admin", "$2y$10$gmvUlKSALDqtvnoAhDrpn.F/XvTS.6pQPO37vfWl3EukVNc7yfGVG");
 
 create table video (
     video_id int not null auto_increment primary key,
@@ -34,5 +34,3 @@ create table rent (
     constraint `rent_ref_video_id` foreign key (video_id) references video(video_id),
     constraint `rent_ref_customer_id` foreign key (customer_id) references customer(customer_id)
 ) engine = InnoDB;
-
-show tables;
