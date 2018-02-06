@@ -7,13 +7,13 @@ session_start();
 if (isset($_POST['admin_id']) and isset($_POST['password'])) {
     $admin_id = $_POST['admin_id'];
     $password = $_POST['password'];
-    $query = "SELECT * FROM `admin_data` WHERE admin_id='$admin_id' AND password_hash='$password';";
+    $query = "SELECT password_hash FROM `admin_data` WHERE admin_id='$admin_id';";
     $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
     $count = mysqli_num_rows($result);
 	while ($row = mysqli_fetch_assoc($result)) {
-		echo "".$row['admin_id']." <br>";
-	}
-    if ($count == 1) {
+        $password_hash = $row['password_hash'];
+    }
+    if(password_verify($password, $password_hash)){
         $_SESSION['admin_id'] = $admin_id;
     } else {
         unset($_SESSION['admin_id']);
