@@ -9,8 +9,16 @@ Properties of $movie:
 - synopsis
  */
 if (isset($_POST['search_word'])) {
-    echo "<br>";
-    echo "You searched for ".$_POST['search_word'];
+    require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
+    $x = $_POST['search_word'];
+    $result = send_query("select * from video where title like '%$x%';");
+    $LIMIT = 10;
+    for ($i = 0; $i < $LIMIT && $i < count($result); $i++) {
+        render_movie_item($result[$i]);
+    }
+    if(count($result) == 0) {
+        echo "No result found.";
+    }
     exit;
 }
 
@@ -51,8 +59,7 @@ function render_movie_item($movie)
     <body>
         
         <h1 id="header">retrieve movie</h1>
-        <input id="searchInput" type="text"> <input id="searchBtn" type="submit"> <br>
-        <p id="response"></p>
+        <input id="searchInput" type="text" onkeypress="return searchOnKeyPress(event);"> <input id="searchBtn" type="submit"> <br>
         genre <select name="genre">
             <option value="A">A</option>
             <option value="B">A</option>
@@ -63,37 +70,36 @@ function render_movie_item($movie)
             <option value="B">A</option>
             <option value="-">Other</option>
         </select>
-
-        <?php
-        require($_SERVER['DOCUMENT_ROOT'] . "/home/util/connect.php");
-        $query = "select * from video;";
-        $result = mysqli_query($conn, $query);
-        if (!$result) {
-            $message = 'Invalid query: ' . mysqli_error() . "\n";
-            $message .= 'Whole query: ' . $query;
-            echo $message;
-            die($message);
-        }
-        $LIMIT = 10;
-        for ($i = 0; $i < $LIMIT; $i++) {
-            $row = mysqli_fetch_assoc($result);
-            render_movie_item($row);
-        }
-        mysqli_close($conn);
-        ?>
+        <div id="movieList">
+            <?php
+            require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
+            $result = send_query('select * from video;');
+            $LIMIT = 10;
+            for ($i = 0; $i < $LIMIT; $i++) {
+                render_movie_item($result[$i]);
+            }
+            mysqli_close($conn);
+            ?>
+        </div>
     </body>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script lang="js">
-        $('#searchBtn').click(function() {
+        function searchOnKeyPress(e){
+            if(e.keyCode == 13) {
+                submitWordSearchQuery();
+            }
+
+        }
+        function submitWordSearchQuery() {
             $.ajax({
                 type: "POST",
                 url: "retrieve_movie.php",
                 data: { search_word: document.getElementById("searchInput").value}
             }).done(function( ajaxResponse ) {
-                document.getElementById("response").innerHTML = ajaxResponse
-                console.log( "Data Saved: " + ajaxResponse );
+                document.getElementById("movieList").innerHTML = ajaxResponse
             });    
-        });
+        }
+        $('#searchBtn').click(submitWordSearchQuery);
         x = (1+2)/5;
     </script>
 </html>
