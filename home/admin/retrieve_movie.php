@@ -8,8 +8,8 @@ Properties of $movie:
 - img_path
 - synopsis
  */
+require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
 if (isset($_POST['search_word'])) {
-    require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
     $x = $_POST['search_word'];
     $result = send_query("select * from video where title like '%$x%';");
     $LIMIT = 10;
@@ -61,9 +61,23 @@ function render_movie_item($movie)
         <h1 id="header">retrieve movie</h1>
         <input id="searchInput" type="text" onkeypress="return searchOnKeyPress(event);"> <input id="searchBtn" type="submit"> <br>
         genre <select name="genre">
-            <option value="A">A</option>
-            <option value="B">A</option>
-            <option value="-">Other</option>
+            <?php
+                $result = send_query("select distinct genre from video;");
+                $genres = array();
+                foreach($result as $val) {
+                    $genres = array_merge($genres, explode(",", $val['genre']));
+                }
+                $genres = (array_unique(array_map(trim, $genres)));
+                $genres = array_values(array_filter($genres));
+                //TODO: sort the $genres
+                // $genres = uasort($genres, function ($a, $b) {
+                //     return strcmp($a['path'], $b['path']);
+                // });
+                // print_r($genres);
+                foreach($genres as $g) {
+                    echo "<option value='$g'>$g</option>";
+                }
+            ?>
         </select> <br>
         year <select name="year">
             <option value="A">A</option>
@@ -72,13 +86,13 @@ function render_movie_item($movie)
         </select>
         <div id="movieList">
             <?php
-            require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
             $result = send_query('select * from video;');
             $LIMIT = 10;
             for ($i = 0; $i < $LIMIT; $i++) {
                 render_movie_item($result[$i]);
             }
             mysqli_close($conn);
+            // TODO: Paging
             ?>
         </div>
     </body>
@@ -90,6 +104,7 @@ function render_movie_item($movie)
             }
 
         }
+        $('#searchBtn').click(submitWordSearchQuery);
         function submitWordSearchQuery() {
             $.ajax({
                 type: "POST",
@@ -99,7 +114,5 @@ function render_movie_item($movie)
                 document.getElementById("movieList").innerHTML = ajaxResponse
             });    
         }
-        $('#searchBtn').click(submitWordSearchQuery);
-        x = (1+2)/5;
     </script>
 </html>
