@@ -1,4 +1,7 @@
 <?php
+// Turn on error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 /*
 Properties of $movie:
 - video_id
@@ -13,10 +16,13 @@ require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
 if (isset($_POST['searchWord'])) {
     $searchWord = $_POST['searchWord'];
     $selectedGenre = $_POST['selectedGenre'];
+    $selectedYear = $_POST['selectedYear'];
     $query = <<<QUERY
     select * from video 
     where title like '%$searchWord%'
-    and genre like '%$selectedGenre%';
+    and genre like '%$selectedGenre%'
+    and year like '%$selectedYear%'
+    ;
 QUERY;
     $result = send_query($query.";");
     $LIMIT = 10;
@@ -35,7 +41,7 @@ if (isset($_POST['renderGenre'])) {
     foreach ($result as $val) {
         $genres = array_merge($genres, explode(",", $val['genre']));
     }
-    $genres = (array_unique(array_map(trim, $genres)));
+    $genres = (array_unique(array_map("trim", $genres)));
     $genres = array_values(array_filter($genres));
     sort($genres);
     $html = "";
@@ -43,6 +49,22 @@ if (isset($_POST['renderGenre'])) {
         $html.="<option value='$g'>$g</option>";
     }
     $html = "<select id='genreList'>".$html."</select>";
+    echo $html;
+    exit;
+}
+
+if (isset($_POST['renderYear'])) {
+    $result = send_query("select distinct year from video;");
+    $years = array();
+    foreach ($result as $val) {
+        array_push($years, $val['year']);
+    }
+    sort($years);
+    $html = "";
+    foreach ($years as $y) {
+        $html.="<option value='$y'>$y</option>";
+    }
+    $html = "<select id='yearList'>".$html."</select>";
     echo $html;
     exit;
 }
@@ -88,12 +110,7 @@ function render_movie_item($movie)
     <input id="searchInput" type="text" onkeypress="return searchOnKeyPress(event);"> 
         <button id="searchBtn" onclick="submitWordSearchQuery();">SEARCH</button> 
         <button id="genreBtn" onclick="renderGenres();">Choose Genre</button>
-        <button id="yearBtn" onclick="">Choose Year</button>
-        year <select name="year">
-            <option value="A">A</option>
-            <option value="B">A</option>
-            <option value="-">Other</option>
-        </select>
+        <button id="yearBtn" onclick="renderYears();">Choose Year</button>
         <div id="movieList">
             <?php
             $result = send_query('select * from video;');
@@ -114,29 +131,35 @@ function render_movie_item($movie)
                 submitWordSearchQuery();
             }
         }
+
+        function newPOST(data) {
+            return {
+                type: "POST",
+                url: "retrieve_movie.php",
+                data: data
+            };
+        }
         function submitWordSearchQuery() {
             const searchWord = document.getElementById("searchInput").value;
             const genreList = document.getElementById("genreList");
             const selectedGenre = genreList ? genreList[genreList.selectedIndex].value : "";
-            $.ajax({
-                type: "POST",
-                url: "retrieve_movie.php",
-                data: { 
-                    searchWord: searchWord,
-                    selectedGenre: selectedGenre,
-                }
-            }).done(function( ajaxResponse ) {
-                document.getElementById("movieList").innerHTML = ajaxResponse
+            const yearList = document.getElementById("yearList");
+            const selectedYear = yearList ? yearList[yearList.selectedIndex].value : "";
+            $.ajax(newPOST({ searchWord, selectedGenre, selectedYear }))
+                .done((ajaxResponse) => {
+                    document.getElementById("movieList").innerHTML = ajaxResponse
             });    
         }
 
         function renderGenres() {
-            $.ajax({
-                type: "POST",
-                url: "retrieve_movie.php",
-                data: { renderGenre: true }
-            }).done(function( ajaxResponse ) {
-                document.getElementById("genreBtn").outerHTML = ajaxResponse
+            $.ajax(newPOST({renderGenre: true})).done((ajaxResponse) => {
+                document.getElementById("genreBtn").outerHTML = ajaxResponse;
+            });    
+        }
+
+        function renderYears() {
+            $.ajax(newPOST({renderYear: true})).done((ajaxResponse) => {
+                document.getElementById("yearBtn").outerHTML = ajaxResponse;
             });    
         }
     </script>
