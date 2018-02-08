@@ -115,6 +115,8 @@ function render_movie_item($movie)
         <button id="searchBtn" onclick="submitWordSearchQuery();">SEARCH</button> 
         <button id="genreBtn" onclick="renderGenres();">Choose Genre</button>
         <button id="yearBtn" onclick="renderYears();">Choose Year</button>
+        <br>
+        <button id="nextBtn" onclick="nextPage();" tag="0">NEXT PAGE </button>
         <div id="movieList">
             <?php
             $result = send_query('select * from video;');
@@ -125,7 +127,7 @@ function render_movie_item($movie)
             ?>
         </div>
     </body>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="./jquery.js" type="text/javascript"></script>
     <script lang="js">
         function searchOnKeyPress(e){
             const keyCodeOfEnter = 13;
@@ -163,6 +165,11 @@ function render_movie_item($movie)
             $.ajax(newPOST({renderYear: true})).done((ajaxResponse) => {
                 document.getElementById("yearBtn").outerHTML = ajaxResponse;
             });    
+        }
+
+        function nextPage() {
+            const index = document.getElementById("nextBtn").getAttribute("tag");
+            alert(index);
         }
     </script>
 </html>
