@@ -10,9 +10,15 @@ Properties of $movie:
  */
 require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
 
-if (isset($_POST['search_word'])) {
-    $x = $_POST['search_word'];
-    $result = send_query("select * from video where title like '%$x%';");
+if (isset($_POST['searchWord'])) {
+    $searchWord = $_POST['searchWord'];
+    $selectedGenre = $_POST['selectedGenre'];
+    $query = <<<QUERY
+    select * from video 
+    where title like '%$searchWord%'
+    and genre like '%$selectedGenre%';
+QUERY;
+    $result = send_query($query.";");
     $LIMIT = 10;
     for ($i = 0; $i < $LIMIT && $i < count($result); $i++) {
         render_movie_item($result[$i]);
@@ -31,16 +37,12 @@ if (isset($_POST['renderGenre'])) {
     }
     $genres = (array_unique(array_map(trim, $genres)));
     $genres = array_values(array_filter($genres));
-    //TODO: sort the $genres
-    // $genres = uasort($genres, function ($a, $b) {
-        //     return strcmp($a['path'], $b['path']);
-        // });
-        // print_r($genres);
+    sort($genres);
     $html = "";
     foreach ($genres as $g) {
         $html.="<option value='$g'>$g</option>";
     }
-    $html = "<select name='genre'>".$html."</select>";
+    $html = "<select id='genreList'>".$html."</select>";
     echo $html;
     exit;
 }
@@ -84,7 +86,7 @@ function render_movie_item($movie)
         
         <h1 id="header">retrieve movie</h1>
     <input id="searchInput" type="text" onkeypress="return searchOnKeyPress(event);"> 
-        <button id="searchBtn" onclick="submitWordSearchQuery();">SEARCH</button> <br>
+        <button id="searchBtn" onclick="submitWordSearchQuery();">SEARCH</button> 
         <button id="genreBtn" onclick="renderGenres();">Choose Genre</button>
         <button id="yearBtn" onclick="">Choose Year</button>
         year <select name="year">
@@ -107,17 +109,22 @@ function render_movie_item($movie)
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script lang="js">
         function searchOnKeyPress(e){
-            if(e.keyCode == 13) {
+            const keyCodeOfEnter = 13;
+            if(e.keyCode == keyCodeOfEnter) {
                 submitWordSearchQuery();
             }
-
-
         }
         function submitWordSearchQuery() {
+            const searchWord = document.getElementById("searchInput").value;
+            const genreList = document.getElementById("genreList");
+            const selectedGenre = genreList ? genreList[genreList.selectedIndex].value : "";
             $.ajax({
                 type: "POST",
                 url: "retrieve_movie.php",
-                data: { search_word: document.getElementById("searchInput").value}
+                data: { 
+                    searchWord: searchWord,
+                    selectedGenre: selectedGenre,
+                }
             }).done(function( ajaxResponse ) {
                 document.getElementById("movieList").innerHTML = ajaxResponse
             });    
