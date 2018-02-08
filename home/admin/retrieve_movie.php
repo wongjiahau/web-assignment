@@ -117,7 +117,9 @@ function render_movie_item($movie)
         <button id="genreBtn" onclick="renderGenres();">Choose Genre</button>
         <button id="yearBtn" onclick="renderYears();">Choose Year</button>
         <br>
-        <button id="nextBtn" onclick="nextPage();" tag="0">NEXT PAGE </button>
+        <button id="prevBtn" onclick="prevPage();">PREVIOUS PAGE </button>
+        <button id="nextBtn" onclick="nextPage();">NEXT PAGE </button>
+        <div id="currentIndexDiv" tag="0"></div>
         <div id="movieList">
             <?php
             $result = send_query('select * from video;');
@@ -150,7 +152,7 @@ function render_movie_item($movie)
             const selectedGenre = genreList ? genreList[genreList.selectedIndex].value : "";
             const yearList = document.getElementById("yearList");
             const selectedYear = yearList ? yearList[yearList.selectedIndex].value : "";
-            const startIndex = document.getElementById("nextBtn").getAttribute("tag");
+            const startIndex = document.getElementById("currentIndexDiv").getAttribute("tag");
             $.ajax(newPOST({ searchWord, selectedGenre, selectedYear, startIndex }))
                 .done((ajaxResponse) => {
                     document.getElementById("movieList").innerHTML = ajaxResponse
@@ -169,11 +171,18 @@ function render_movie_item($movie)
             });    
         }
 
-        function nextPage() {
+        function goToWhere(callback) {
             const LIMIT = 10;
-            const currentIndex = document.getElementById("nextBtn").getAttribute("tag"); 
-            document.getElementById("nextBtn").setAttribute("tag", (parseInt(currentIndex) + LIMIT).toString());
+            const div = document.getElementById("currentIndexDiv");
+            const currentIndex = div.getAttribute("tag"); 
+            div.setAttribute("tag", callback(parseInt(currentIndex), LIMIT).toString());
             submitWordSearchQuery();
+        }
+        function nextPage() {
+            goToWhere((x, y) => x + y)
+        }
+        function prevPage() {
+            goToWhere((x, y) => x - y)
         }
     </script>
 </html>
