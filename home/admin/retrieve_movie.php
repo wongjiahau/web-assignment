@@ -18,12 +18,14 @@ if (isset($_POST['searchWord'])) {
     $searchWord = $_POST['searchWord'];
     $selectedGenre = $_POST['selectedGenre'];
     $selectedYear = $_POST['selectedYear'];
+    $startIndex = $_POST['startIndex'];
+    $endIndex = $startIndex + $LIMIT - 1;
     $query = <<<QUERY
     select * from video 
     where title like '%$searchWord%'
     and genre like '%$selectedGenre%'
     and year like '%$selectedYear%'
-    limit $LIMIT
+    limit $startIndex, $endIndex
     ;
 QUERY;
     $result = send_query($query . ";");
@@ -50,7 +52,7 @@ if (isset($_POST['renderGenre'])) {
     foreach ($genres as $g) {
         $html .= "<option value='$g'>$g</option>";
     }
-    $html = "<option value=''>Any</option>".$html;
+    $html = "<option value=''>Any</option>" . $html;
     $html = "<select id='genreList'>" . $html . "</select>";
     echo $html;
     exit;
@@ -65,7 +67,7 @@ if (isset($_POST['renderYear'])) {
     sort($years);
     $html = "";
     foreach ($years as $y) {
-        $html = "<option value='$y'>$y</option>".$html;
+        $html = "<option value='$y'>$y</option>" . $html;
     }
     $html .= "<option value=''>Any</option>";
     $html = "<select id='yearList'>" . $html . "</select>";
@@ -106,7 +108,6 @@ function render_movie_item($movie)
         .movieItem {
             border: 1px solid black
         }
-        
     </style>
     <body>
         
@@ -120,7 +121,7 @@ function render_movie_item($movie)
         <div id="movieList">
             <?php
             $result = send_query('select * from video;');
-            foreach($result as $row) {
+            foreach ($result as $row) {
                 render_movie_item($row);
             }
             // TODO: Paging
@@ -149,7 +150,8 @@ function render_movie_item($movie)
             const selectedGenre = genreList ? genreList[genreList.selectedIndex].value : "";
             const yearList = document.getElementById("yearList");
             const selectedYear = yearList ? yearList[yearList.selectedIndex].value : "";
-            $.ajax(newPOST({ searchWord, selectedGenre, selectedYear }))
+            const startIndex = document.getElementById("nextBtn").getAttribute("tag");
+            $.ajax(newPOST({ searchWord, selectedGenre, selectedYear, startIndex }))
                 .done((ajaxResponse) => {
                     document.getElementById("movieList").innerHTML = ajaxResponse
             });    
@@ -168,8 +170,10 @@ function render_movie_item($movie)
         }
 
         function nextPage() {
-            const index = document.getElementById("nextBtn").getAttribute("tag");
-            alert(index);
+            const LIMIT = 10;
+            const currentIndex = document.getElementById("nextBtn").getAttribute("tag"); 
+            document.getElementById("nextBtn").setAttribute("tag", (parseInt(currentIndex) + LIMIT).toString());
+            submitWordSearchQuery();
         }
     </script>
 </html>
