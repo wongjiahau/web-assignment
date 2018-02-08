@@ -9,6 +9,7 @@ Properties of $movie:
 - synopsis
  */
 require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
+
 if (isset($_POST['search_word'])) {
     $x = $_POST['search_word'];
     $result = send_query("select * from video where title like '%$x%';");
@@ -16,11 +17,34 @@ if (isset($_POST['search_word'])) {
     for ($i = 0; $i < $LIMIT && $i < count($result); $i++) {
         render_movie_item($result[$i]);
     }
-    if(count($result) == 0) {
+    if (count($result) == 0) {
         echo "No result found.";
     }
     exit;
 }
+
+if (isset($_POST['renderGenre'])) {
+    $result = send_query("select distinct genre from video;");
+    $genres = array();
+    foreach ($result as $val) {
+        $genres = array_merge($genres, explode(",", $val['genre']));
+    }
+    $genres = (array_unique(array_map(trim, $genres)));
+    $genres = array_values(array_filter($genres));
+    //TODO: sort the $genres
+    // $genres = uasort($genres, function ($a, $b) {
+        //     return strcmp($a['path'], $b['path']);
+        // });
+        // print_r($genres);
+    $html = "";
+    foreach ($genres as $g) {
+        $html.="<option value='$g'>$g</option>";
+    }
+    $html = "<select name='genre'>".$html."</select>";
+    echo $html;
+    exit;
+}
+
 
 function render_movie_item($movie)
 {
@@ -59,26 +83,10 @@ function render_movie_item($movie)
     <body>
         
         <h1 id="header">retrieve movie</h1>
-        <input id="searchInput" type="text" onkeypress="return searchOnKeyPress(event);"> <input id="searchBtn" type="submit"> <br>
-        genre <select name="genre">
-            <?php
-                $result = send_query("select distinct genre from video;");
-                $genres = array();
-                foreach($result as $val) {
-                    $genres = array_merge($genres, explode(",", $val['genre']));
-                }
-                $genres = (array_unique(array_map(trim, $genres)));
-                $genres = array_values(array_filter($genres));
-                //TODO: sort the $genres
-                // $genres = uasort($genres, function ($a, $b) {
-                //     return strcmp($a['path'], $b['path']);
-                // });
-                // print_r($genres);
-                foreach($genres as $g) {
-                    echo "<option value='$g'>$g</option>";
-                }
-            ?>
-        </select> <br>
+    <input id="searchInput" type="text" onkeypress="return searchOnKeyPress(event);"> 
+        <button id="searchBtn" onclick="submitWordSearchQuery();">SEARCH</button> <br>
+        <button id="genreBtn" onclick="renderGenres();">Choose Genre</button>
+        <button id="yearBtn" onclick="">Choose Year</button>
         year <select name="year">
             <option value="A">A</option>
             <option value="B">A</option>
@@ -103,8 +111,8 @@ function render_movie_item($movie)
                 submitWordSearchQuery();
             }
 
+
         }
-        $('#searchBtn').click(submitWordSearchQuery);
         function submitWordSearchQuery() {
             $.ajax({
                 type: "POST",
@@ -112,6 +120,16 @@ function render_movie_item($movie)
                 data: { search_word: document.getElementById("searchInput").value}
             }).done(function( ajaxResponse ) {
                 document.getElementById("movieList").innerHTML = ajaxResponse
+            });    
+        }
+
+        function renderGenres() {
+            $.ajax({
+                type: "POST",
+                url: "retrieve_movie.php",
+                data: { renderGenre: true }
+            }).done(function( ajaxResponse ) {
+                document.getElementById("genreBtn").outerHTML = ajaxResponse
             });    
         }
     </script>
