@@ -13,6 +13,7 @@ function send_query($query)
     while ($row = mysqli_fetch_assoc($sql_result)) {
         array_push($result, $row);
     }
+    mysqli_close($conn);
     return $result;
 }
 ?>

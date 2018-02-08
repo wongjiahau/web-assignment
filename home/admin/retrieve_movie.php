@@ -14,6 +14,7 @@ Properties of $movie:
 require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
 
 if (isset($_POST['searchWord'])) {
+    $LIMIT = 10;
     $searchWord = $_POST['searchWord'];
     $selectedGenre = $_POST['selectedGenre'];
     $selectedYear = $_POST['selectedYear'];
@@ -22,9 +23,10 @@ if (isset($_POST['searchWord'])) {
     where title like '%$searchWord%'
     and genre like '%$selectedGenre%'
     and year like '%$selectedYear%'
+    limit $LIMIT
     ;
 QUERY;
-    $result = send_query($query.";");
+    $result = send_query($query . ";");
     $LIMIT = 10;
     for ($i = 0; $i < $LIMIT && $i < count($result); $i++) {
         render_movie_item($result[$i]);
@@ -46,9 +48,10 @@ if (isset($_POST['renderGenre'])) {
     sort($genres);
     $html = "";
     foreach ($genres as $g) {
-        $html.="<option value='$g'>$g</option>";
+        $html .= "<option value='$g'>$g</option>";
     }
-    $html = "<select id='genreList'>".$html."</select>";
+    $html = "<option value=''>Any</option>".$html;
+    $html = "<select id='genreList'>" . $html . "</select>";
     echo $html;
     exit;
 }
@@ -62,9 +65,10 @@ if (isset($_POST['renderYear'])) {
     sort($years);
     $html = "";
     foreach ($years as $y) {
-        $html.="<option value='$y'>$y</option>";
+        $html = "<option value='$y'>$y</option>".$html;
     }
-    $html = "<select id='yearList'>".$html."</select>";
+    $html .= "<option value=''>Any</option>";
+    $html = "<select id='yearList'>" . $html . "</select>";
     echo $html;
     exit;
 }
@@ -114,11 +118,9 @@ function render_movie_item($movie)
         <div id="movieList">
             <?php
             $result = send_query('select * from video;');
-            $LIMIT = 10;
-            for ($i = 0; $i < $LIMIT; $i++) {
-                render_movie_item($result[$i]);
+            foreach($result as $row) {
+                render_movie_item($row);
             }
-            mysqli_close($conn);
             // TODO: Paging
             ?>
         </div>
