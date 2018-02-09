@@ -2,16 +2,8 @@
 // Turn on error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-/*
-Properties of $movie:
-- video_id
-- title
-- year
-- genre
-- img_path
-- synopsis
- */
 require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/home/class/MovieItem.php");
 
 if (isset($_POST['searchWord'])) {
     $LIMIT = 10;
@@ -31,7 +23,8 @@ QUERY;
     $result = send_query($query . ";");
     $LIMIT = 10;
     for ($i = 0; $i < $LIMIT && $i < count($result); $i++) {
-        render_movie_item($result[$i]);
+        $movie = new MovieItem($result[$i]);
+        $movie->render();
     }
     if (count($result) == 0) {
         echo "No result found.";
@@ -76,32 +69,6 @@ if (isset($_POST['renderYear'])) {
 }
 
 
-function render_movie_item($movie)
-{
-    $id = $movie['video_id'];
-    $title = $movie['title'];
-    $year = $movie['year'];
-    $genre = $movie['genre'];
-    $img_path = $movie['img_path'];
-    $synopsis = $movie['synopsis'];
-    echo "
-    <div class='movieItem' id='movieItem$id'>
-        <table>
-            <tr>
-                <td>
-                    <img src='$img_path'></img>
-                </td>
-                <td>
-                    <h3>$title ($year)</h3>
-                    Genre: $genre <br>
-                    Synopsis: <article>$synopsis</article>
-                </td>
-            </tr>
-        </table> 
-    </div>
-    ";
-
-}
 ?>
 <html>
     <style>
@@ -124,7 +91,8 @@ function render_movie_item($movie)
             <?php
             $result = send_query('select * from video;');
             foreach ($result as $row) {
-                render_movie_item($row);
+                $movie = new MovieItem($row);
+                $movie->render();
             }
             // TODO: Paging
             ?>
