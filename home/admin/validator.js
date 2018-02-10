@@ -6,23 +6,32 @@ function Validator(str) {
     this.isEmpty = () => {
         return str.length === 0;
     }
-    this.isValid = this.isEmpty()
-        ? new NullValidatorChain()
+    this.isInvalid = this.isEmpty()
+        ? new NullValidatorChain("Cannot be empty")
         : new ValidatorChain(this.str);
 }
 
-function NullValidatorChain() {
-    this.Title = () => false
-    this.Year = () => false
-    this.Year = () => false
-    this.Synopsis = () => false
+function NullValidatorChain(errorMessage) {
+    this.Title = () => errorMessage;
+    this.Year = () => errorMessage;
+    this.Year = () => errorMessage;
+    this.Synopsis = () => errorMessage;
 }
 
 function ValidatorChain(str) {
     this.str = str;
-    this.Title = () => {}
+    this.Title = () => {
+        if(!/^[a-zA-Z0-9'"().,\?:\s]+$/.test(this.str)) {
+            return "Cannot contain weird symbols";
+        }
+        if(this.str.length >= 100) {
+            return "Cannot contain more than 100 letters";
+        }
+        return "";
+    }
 
     this.Year = () => {
+
         if(!/[1,2][0, 8, 9][0-9]{2}/.test(this.str)) {
             return false;
         }
