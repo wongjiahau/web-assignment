@@ -1,0 +1,22 @@
+{
+  "name": "web-assignment",
+  "version": "1.0.0",
+  "description": "Create a symbolic link in the server root to `./home`; ``` sudo ln -s ~/Repos/web-assignment/home/ ./home ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wongjiahau/web-assignment.git"
+  },
+  "author": "Wong Jia Hau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wongjiahau/web-assignment/issues"
+  },
+  "homepage": "https://github.com/wongjiahau/web-assignment#readme",
+  "dependencies": {
+    "jest": "^22.2.2"
+  }
+}

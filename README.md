@@ -5,6 +5,11 @@ Create a symbolic link in the server root to `./home`;
 sudo ln -s ~/Repos/web-assignment/home/ ./home
 ```
 
+## How to run test ?
+```
+npm run test
+```
+
 ## What is the credentials for admin of this website?
 ```
 Username: admin
