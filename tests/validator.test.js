@@ -32,34 +32,34 @@ describe("isInvalid.Title", () => {
 
 describe("isInvalid.Year", () => {
     it("shold return false if the input is empty", () => {
-        expect(v("").isInvalid.Year()).toBe(false);
+        expect(v("").isInvalid.Year()).toBe("Cannot be empty");
     });
     it("should return false if input is greater than current year", () => {
         const currentYear = new Date().getFullYear();
         const laterYear = new Date().getFullYear() + 1;
         expect(laterYear).toBeGreaterThan(currentYear);
-        expect(v(laterYear.toString()).isInvalid.Year().length).toBeGreaterThan(0);
+        expect(v(laterYear.toString()).isInvalid.Year()).toBe("Cannot be later than the current year");
     });
 
     it("should return false if the input is not 4 digit", () => {
-        expect(v("123").isInvalid.Year()).toBe(false);
-        expect(v("20133").isInvalid.Year()).toBe(false);
+        expect(v("123").isInvalid.Year()).toBe("Must consist of 4 digits only");
+        expect(v("20133").isInvalid.Year()).toBe("Must consist of 4 digits only");
     });
 
     it("should return false if the year is less than 1878", () => {
         // According to https://headsup.boyslife.org/what-was-the-first-movie-ever-made/
         // The first ever made file is in 1878, so this should be the limit
-        expect(v("1877").isInvalid.Year()).toBe(false);
+        expect(v("1877").isInvalid.Year()).toBe("Cannot be earlier than 1878");
     });
 
     it("should return false if it contains non-digit char", () => {
-        expect(v("18j8").isInvalid.Year()).toBe(false);
+        expect(v("18j8").isInvalid.Year()).toBe("Cannot contain non-digit letter");
     });
 
     it("should retun true otherwise", () => {
-        expect(v("1899").isInvalid.Year()).toBe(true);
-        expect(v("1970").isInvalid.Year()).toBe(true);
-        expect(v("2014").isInvalid.Year()).toBe(true);
+        expect(v("1899").isInvalid.Year()).toBe("");
+        expect(v("1970").isInvalid.Year()).toBe("");
+        expect(v("2014").isInvalid.Year()).toBe("");
     });
     
 });

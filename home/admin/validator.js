@@ -14,7 +14,7 @@ function Validator(str) {
 function NullValidatorChain(errorMessage) {
     this.Title = () => errorMessage;
     this.Year = () => errorMessage;
-    this.Year = () => errorMessage;
+    this.Genre = () => errorMessage;
     this.Synopsis = () => errorMessage;
 }
 
@@ -32,17 +32,28 @@ function ValidatorChain(str) {
 
     this.Year = () => {
 
-        if(!/[1,2][0, 8, 9][0-9]{2}/.test(this.str)) {
-            return false;
+        if(!/^[0-9]+$/.test(this.str)) {
+            return "Cannot contain non-digit letter";
+        }
+        if(this.str.length !== 4) {
+            return "Must consist of 4 digits only";
         }
         const year = parseInt(this.str);
         if (year > new Date().getFullYear()) {
-            return false;
+            return "Cannot be later than the current year";
         }
         if (year < 1878) {
-            return false;
+            return "Cannot be earlier than 1878";
         }
-        return true;
+        return "";
+    }
+
+    this.Genre = () => {
+        return this.Title();
+    }
+
+    this.Synopsis = () => {
+        return this.Title();
     }
 
 }
