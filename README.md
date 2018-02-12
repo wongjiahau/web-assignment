@@ -17,6 +17,10 @@ sudo ln -s ~/Repos/web-assignment/home/ ./home
 
 ## How to run test ?
 ```
+# To run php test
+./vendor/bin/kahlan --reporter=verbose 
+
+# To run js test
 npm run test
 ```
 
