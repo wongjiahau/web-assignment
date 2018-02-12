@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
-require($_SERVER['DOCUMENT_ROOT'] . "/home/class/MovieItem.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/src/MovieItem.php");
 ?>
 <html>
     <style>
