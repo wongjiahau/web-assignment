@@ -1,6 +1,6 @@
 <?php
 define('__ROOT__', dirname(dirname(__FILE__)));
-require_once(__ROOT__.'/src/sample.php');
+require_once(__ROOT__.'/src/Sample.php');
 
 describe("Sample", function() {
     describe("toString", function() {
