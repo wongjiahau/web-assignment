@@ -1,6 +1,17 @@
 # web-assignment
 ## How to get started?
-### 1. Install dependencies
+Run the code below :
+```
+cd ~
+git clone https://github.com/wongjiahau/web-assignment.git
+cd /var/www/html
+sudo mkdir backup
+sudo mv ./html ./backup
+sudo ln -s ~/web-assignment html
+```
+NOTE: It will move all your files which is previously in `/var/www/html` into `/var/www/backup`
+
+### How to install dependencies?
 Before that, please install [`composer`](https://getcomposer.org/download/) and [`npm`](https://docs.npmjs.com/getting-started/installing-node)
 ```
 # Install php plugins
@@ -8,13 +19,6 @@ php composer.phar install
 
 # Install node packages
 npm install
-```
-## How to launch this website?
-Create a symbolic link in the server root to `./home`;
-```
-sudo ln -s ~/Repos/web-assignment/home/ ./home
-```
-
 ## How to run test ?
 ```
 # To run php test
