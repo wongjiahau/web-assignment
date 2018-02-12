@@ -1,4 +1,14 @@
 # web-assignment
+## How to get started?
+### 1. Install dependencies
+Before that, please install [`composer`](https://getcomposer.org/download/) and [`npm`](https://docs.npmjs.com/getting-started/installing-node)
+```
+# Install php plugins
+php composer.phar install
+
+# Install node packages
+npm install
+```
 ## How to launch this website?
 Create a symbolic link in the server root to `./home`;
 ```
