@@ -12,27 +12,27 @@ class MovieItem
 {
     function __construct($row)
     {
-        $this->id = $row['video_id'];
-        $this->title = $row['title'];
-        $this->year = $row['year'];
-        $this->genre = $row['genre'];
-        $this->img_path = $row['img_path'];
-        $this->synopsis = $row['synopsis'];
+        $this->_id = $row['video_id'];
+        $this->_title = $row['title'];
+        $this->_year = $row['year'];
+        $this->_genre = $row['genre'];
+        $this->_img_path = $row['img_path'];
+        $this->_synopsis = $row['synopsis'];
     }
 
     function render()
     {
         echo "
-            <div class='movieItem' id='movieItem$this->id'>
+            <div class='movieItem' id='movieItem$this->_id'>
                 <table>
                     <tr>
                         <td>
-                            <img src='$this->img_path'></img>
+                            <img src='$this->_img_path'></img>
                         </td>
                         <td>
-                            <h3>$this->title ($this->year)</h3>
-                            Genre: $this->genre <br>
-                            Synopsis: <article>$this->synopsis</article>
+                            <h3>$this->_title ($this->_year)</h3>
+                            Genre: $this->_genre <br>
+                            Synopsis: <article>$this->_synopsis</article>
                         </td>
                     </tr>
                 </table> 
