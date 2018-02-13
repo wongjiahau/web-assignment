@@ -2,8 +2,28 @@
 // Turn on error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
-require($_SERVER['DOCUMENT_ROOT'] . "/src/MovieItem.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/src/MovieItem.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/src/Paginator.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/src/DbLink.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/src/QueryBuilder.php");
+
+if (isset($_POST['searchWord'])) {
+    $pg = new Paginator(new DbLink(), Q()->fromVideo->selectAll, 0);
+    $glue = $pg->getGlue();
+    $pageData = $glue["pageData"];
+    $totalPageCount = $glue["totalPageCount"];
+    $currentPage = $glue["currentPage"];
+    $movieListHtml = "";
+    foreach($pageData as $movie) {
+         $movieListHtml .= (new MovieItem($movie))->render();
+    }
+    $result = array(
+        "movieListHtml" => $movieListHtml,
+        "paginatorHtml" => "<p>Not implemented yet</p>"
+    );
+    echo json_encode($result);
+    exit;
+}
 ?>
 <html>
     <style>
@@ -22,14 +42,15 @@ require($_SERVER['DOCUMENT_ROOT'] . "/src/MovieItem.php");
         <button id="prevBtn" onclick="prevPage();">PREVIOUS PAGE </button>
         <button id="nextBtn" onclick="nextPage();">NEXT PAGE </button>
         <div id="currentIndexDiv" tag="0"></div>
+        <div id="paginatorLink">
+            <?php
+            $pg = new Paginator(new DbLink(), Q()->fromVideo->selectAll);
+            $result = $pg->getGlue();
+            ?>
+        </div>
         <div id="movieList">
             <?php
-            $result = send_query('select * from video;');
-            foreach ($result as $row) {
-                $movie = new MovieItem($row);
-                $movie->render();
-            }
-            // TODO: Paging
+            echo RenderListOfMovies($result["pageData"]);
             ?>
         </div>
     </body>
@@ -45,7 +66,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/src/MovieItem.php");
         function newPOST(data) {
             return {
                 type: "POST",
-                url: "query_movie.php",
+                url: "retrieve_movie.php",
                 data: data
             };
         }
@@ -58,7 +79,9 @@ require($_SERVER['DOCUMENT_ROOT'] . "/src/MovieItem.php");
             const startIndex = document.getElementById("currentIndexDiv").getAttribute("tag");
             $.ajax(newPOST({ searchWord, selectedGenre, selectedYear, startIndex }))
                 .done((ajaxResponse) => {
-                    document.getElementById("movieList").innerHTML = ajaxResponse
+                    result = JSON.parse(ajaxResponse);
+                    document.getElementById("movieList").innerHTML = result.movieListHtml;
+                    document.getElementById("paginatorLink").innerHTML = result.paginatorHtml;
             });    
         }
 

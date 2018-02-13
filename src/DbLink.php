@@ -14,7 +14,7 @@ class DbLink
             echo "Error";
             die('Could not connect: ' . mysqli_error());
         } else {
-            echo('Connected successfully to database');
+            return ('Connected successfully to database');
         }
     }
 

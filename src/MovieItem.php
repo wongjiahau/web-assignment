@@ -22,7 +22,7 @@ class MovieItem
 
     function render()
     {
-        echo "
+        return "
             <div class='movieItem' id='movieItem$this->_id'>
                 <table>
                     <tr>
@@ -39,5 +39,14 @@ class MovieItem
             </div>
     ";
     }
+}
+
+function RenderListOfMovies($rows)
+{
+    $res = "";
+    foreach ($rows as $r) {
+        $res .= (new MovieItem($r))->render();
+    }
+    return $res;
 }
 ?>
