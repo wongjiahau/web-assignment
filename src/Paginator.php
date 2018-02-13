@@ -3,31 +3,34 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/src/DbLink.php");
 class Paginator
 {
     private $_dbLink;
-    private $_query;
+    private $_queryBuilder;
     private $_result;
     private $_totalPages;
 
-    public function __construct($dbLink, $query)
+    public function __construct($dbLink, $queryBuilder)
     {
         $this->_dbLink = $dbLink;
-        $this->_query = $query;
+        $this->_queryBuilder = $queryBuilder;
     }
 
-    public function getData($page = 0, $limit = 10)
+    public function getPage($page = 0, $limit = 10)
     {
+        $startIndex = $page * $limit;
+        $limitedQuery = $this->_queryBuilder->undelimited() . " limit $startIndex, $limit;";
+        return $this->_dbLink->sendQuery($limitedQuery);
     }
 
     public function getTotalCount()
     {
         return (int)$this->_dbLink
             ->sendQuery(
-                $this->countifyQuery($this->_query)
+                $this->countifyQuery($this->_queryBuilder)
             )[0]["count(*)"];
     }
 
-    public function countifyQuery($query)
+    public function countifyQuery($queryBuilder)
     {
-        $toks = explode(" ", $query);
+        $toks = explode(" ", $queryBuilder);
         $res = array();
         $startToSelect = false;
         foreach ($toks as $x) {
