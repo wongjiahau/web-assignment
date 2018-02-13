@@ -1,6 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require($_SERVER['DOCUMENT_ROOT'] . "/home/util/send_query.php");
-require($_SERVER['DOCUMENT_ROOT'] . "/home/class/MovieItem.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/src/MovieItem.php");
 
 if (isset($_POST['searchWord'])) {
     $LIMIT = 10;
@@ -43,7 +45,7 @@ if (isset($_POST['renderGenre'])) {
         $html .= "<option value='$g'>$g</option>";
     }
     $html = "<option value=''>Any</option>" . $html;
-    $html = "<select id='genreList'>" . $html . "</select>";
+    $html = "<select id='genreList' multiple>" . $html . "</select>";
     echo $html;
     exit;
 }
