@@ -4,18 +4,23 @@ class Paginator
 {
     private $_dbLink;
     private $_queryBuilder;
+    private $_page;
+    private $_pageLimit;
     private $_result;
     private $_totalPages;
 
-    public function __construct($dbLink, $queryBuilder)
+    public function __construct($dbLink, $queryBuilder, $page = 0, $pageLimit = 10)
     {
         $this->_dbLink = $dbLink;
         $this->_queryBuilder = $queryBuilder;
+        $this->_page = $page;
+        $this->_pageLimit = $pageLimit;
     }
 
-    public function getPage($page = 0, $limit = 10)
+    public function getPage()
     {
-        $startIndex = $page * $limit;
+        $startIndex = $this->_page * $this->_pageLimit;
+        $limit = $this->_pageLimit;
         $limitedQuery = $this->_queryBuilder->undelimited() . " limit $startIndex, $limit;";
         return $this->_dbLink->sendQuery($limitedQuery);
     }
@@ -24,13 +29,18 @@ class Paginator
     {
         return (int)$this->_dbLink
             ->sendQuery(
-                $this->countifyQuery($this->_queryBuilder)
+                $this->countifyQuery($this->_queryBuilder->delimited())
             )[0]["count(*)"];
     }
 
-    public function countifyQuery($queryBuilder)
+    public function getTotalPageCount()
     {
-        $toks = explode(" ", $queryBuilder);
+        return (int)ceil($this->getTotalCount() / $this->_pageLimit);
+    }
+
+    public function countifyQuery($query)
+    {
+        $toks = explode(" ", $query);
         $res = array();
         $startToSelect = false;
         foreach ($toks as $x) {
@@ -44,9 +54,14 @@ class Paginator
         return "select count(*) from " . implode(" ", $res);
     }
 
-    public function toString()
+    public function getGlue()
     {
-        return "hello";
+        $result = array(
+            "currentPage" => $this->_page,
+            "totalPageCount" => $this->getTotalPageCount(),
+            "pageData" => $this->getPage($this->_page)
+        );
+        return $result;
     }
 }
 ?>

@@ -10,7 +10,7 @@ require_once(__ROOT__ . '/src/QueryBuilder.php');
 describe("Paginator", function () {
     describe("countifyQuery", function () {
         it("case 1", function () {
-            $x = new Paginator(null, Q()->fromVideo->selectCount);
+            $x = new Paginator(null, null);
             $result = $x->countifyQuery("select * from video;");
             expect($result)->toBe("select count(*) from video;");
         });
@@ -24,16 +24,18 @@ describe("Paginator", function () {
 
     describe("getPage", function () {
         it("case 1", function () {
-            $x = new Paginator(new DbLink(), Q()->fromVideo->selectAll);
-            $result = $x->getPage(0);
+            $page_number = 0;
+            $x = new Paginator(new DbLink(), Q()->fromVideo->selectAll, $page_number);
+            $result = $x->getPage();
             expect(sizeof($result))->toBe(10);
             expect($result[0]["title"])->toBe("The Walking Dead");
             expect($result[9]["title"])->toBe("Luther");
         });
 
         it("case 2", function () {
-            $x = new Paginator(new DbLink(), Q()->fromVideo->selectAll);
-            $result = $x->getPage(1);
+            $page_number = 1;
+            $x = new Paginator(new DbLink(), Q()->fromVideo->selectAll, $page_number);
+            $result = $x->getPage();
             expect(sizeof($result))->toBe(10);
             expect($result[0]["title"])->toBe("Justified");
             expect($result[9]["title"])->toBe("Black Swan");
@@ -44,8 +46,25 @@ describe("Paginator", function () {
 
     describe("getTotalCount", function () {
         it("case 1", function () {
-            $x = new Paginator(new DbLink(), "select * from video;");
+            $x = new Paginator(new DbLink(), Q()->fromVideo->selectAll);
             expect($x->getTotalCount())->toBe(384);
+        });
+    });
+
+    describe("getTotalPageCount", function () {
+        it("case 1", function () {
+            $x = new Paginator(new DbLink(), Q()->fromVideo->selectAll);
+            expect($x->getTotalPageCount())->toBe(39);
+        });
+    });
+
+    describe("getGlue", function() {
+        it("case 1", function(){
+            $x = new Paginator(new DbLink(), Q()->fromVideo->selectAll, 0);
+            $result = $x->getGlue();
+            expect($result["currentPage"])->toBe(0);
+            expect($result["totalPageCount"])->toBe(39);
+            expect($result["pageData"])->toBe($x->getPage());
         });
     });
 
