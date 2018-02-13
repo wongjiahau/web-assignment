@@ -1,6 +1,9 @@
 <?php
+// This test has a second purpose
+// That is it set up global constants as defined below
 define('__ROOT__', dirname(dirname(__FILE__)));
 require_once(__ROOT__.'/src/Sample.php');
+$_SERVER['DOCUMENT_ROOT'] = __ROOT__;
 
 describe("Sample", function() {
     describe("toString", function() {
