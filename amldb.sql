@@ -1,5 +1,5 @@
 -- aml stands for AAA Movie Library
-drop database aml;
+drop database if exists aml;
 create database aml;
 use aml;
 

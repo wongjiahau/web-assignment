@@ -1,2 +1,4 @@
 #!/bin/bash
-./vendor/bin/kahlan --reporter=verbose
+# To allow verbose reporting, use the commented command below
+# ./vendor/bin/kahlan --reporter=verbose
+./vendor/bin/kahlan  
