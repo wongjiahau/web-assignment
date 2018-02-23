@@ -4,6 +4,13 @@
     <title>Test</title>
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/index.css">
     <script src="<?php echo URL; ?>public/js/jquery.js"></script>
+    <?php
+    if (isset($this->js)) {
+        foreach ($this->js as $js) {
+            echo '<script src="'.URL.'views/'.$js.'"></script>';
+        }
+    }
+    ?>
 </head>
 <body>
 <div id="header">
@@ -11,9 +18,9 @@
     <br/>
     <a href="index">Index</a>
     <a href="help">help</a>
-    <?php if(Session::get('loggedIn')): ?>
+    <?php if (Session::get('loggedIn')) : ?>
         <a href="dashboard/logout">Logout</a>
-    <?php else: ?>
+    <?php else : ?>
         <a href="login">Login</a>
     <?php endif; ?>
 </div>

@@ -9,6 +9,7 @@ class Dashboard extends Controller
             Navigator::goto('login');
             exit;
         }
+        $this->view->js = array('dashboard/js/default.js');
     }
 
     function index()
@@ -26,5 +27,20 @@ class Dashboard extends Controller
         Session::destroy();
         Navigator::goto('login');
         exit;
+    }
+
+    function xhrInsert()
+    {
+        $this->model->xhrInsert();
+    }
+
+    function xhrGetListings()
+    {
+        $this->model->xhrGetListings();
+    }
+
+    function xhrDeleteListing()
+    {
+        $this->model->xhrDeleteListing();
     }
 }

@@ -17,7 +17,6 @@ class Bootstrap
         $url = rtrim($_GET['url'], '/');
         $url = explode('/', $url);
         $file = 'controllers/' . $url[0] . '.php';
-
         if (!file_exists($file)) {
             require 'controllers/fof.php';
             $controller = new Fof("The file: $file does not exists.");
