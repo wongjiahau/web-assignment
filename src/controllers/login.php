@@ -13,6 +13,8 @@ class Login extends Controller
 
     function run()
     {
-        $this->model->run();
+        $newState = $this->model->run($_POST['id'], $_POST['password']);
+        echo($newState);
+        $this->stateManager->update($newState);
     }
 }
