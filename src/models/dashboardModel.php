@@ -8,18 +8,16 @@ class dashboardModel extends Model
 
     function xhrInsert()
     {
-        // Tips: sth means Statement-Handler
-        $sth = $this->db->prepare('insert into data(value) values(:x)');
-        $sth->execute(array(':x' => $_POST['text']));
+        $result = $this->queryDb(
+            'insert into data(value) values(:x)',
+            array(':x' => $_POST['text'])
+        );
         echo json_encode(array('id' => $this->db->lastInsertId(), 'value' => $_POST['text']));
     }
 
     function xhrGetListings()
     {
-        $sth = $this->db->prepare('select * from data');
-        $sth->setFetchMode(PDO::FETCH_ASSOC);
-        $sth->execute();
-        echo json_encode($sth->fetchAll());
+        echo json_encode($this->queryDb('select * from data'));
     }
 
     function xhrDeleteListing()

@@ -4,7 +4,7 @@ use function Kahlan\describe;
 use function Kahlan\expect;
 use function Kahlan\it;
 
-require_once(__ROOT__ . '/src//models/loginModel.php');
+require_once(__ROOT__ . '/src/models/loginModel.php');
 describe("loginModel", function () {
     describe("run", function () {
         it("positive case", function () {
