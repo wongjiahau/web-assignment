@@ -6,7 +6,7 @@ class LoginModel extends Model
         parent::__construct();
     }
 
-    public function run()
+    public function run($id, $password)
     {
         $sth = $this->db->prepare("
             select password_hash from admin_data
@@ -14,17 +14,24 @@ class LoginModel extends Model
         ");
 
         $sth->execute(array(
-            ':admin_id' => $_POST['login']
+            ':admin_id' => $id
         ));
 
         $result = $sth->fetchAll();
         $passwordHash = $result[0]["password_hash"];
 
-        if (password_verify($_POST['password'], $passwordHash)) {
-            Session::set('loggedIn', true);
-            Navigator::goto('dashboard');
+        if (password_verify($password, $passwordHash)) {
+            return array(
+                'url' => 'dashboard',
+                'session' => array(
+                    'key' => 'loggedIn',
+                    'value' => true
+                )
+            );
         } else {
-            Navigator::goto('login');
+            return array(
+                'url' => 'login'
+            );
         }
     }
 }
