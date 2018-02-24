@@ -72,4 +72,12 @@ describe("retrieveMovieModel", function () {
             expect(is_sorted($res))->toBe(true);
         });
     });
+
+    describe("xhrGetPageCount", function () {
+        it("case 1", function () {
+            $x = new RetrieveMovieModel();
+            $res = json_decode($x->xhrGetPageCount("walking"));
+            expect($res)->toBe(1);
+        });
+    });
 });

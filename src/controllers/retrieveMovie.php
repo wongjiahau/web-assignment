@@ -6,7 +6,8 @@ class RetrieveMovie extends Controller
         parent::__construct();
         $this->view->js = array(
             'retrieveMovie/js/default.js',
-            'retrieveMovie/js/renderMovieItem.js'
+            'retrieveMovie/js/renderMovieItem.js',
+            'retrieveMovie/js/renderPageLinks.js'
         );
     }
 
@@ -33,6 +34,16 @@ class RetrieveMovie extends Controller
     function xhrGetYear() 
     {
         echo $this->model->xhrGetYear();
+    }
+
+    function xhrGetPageCount()
+    {
+        echo $this->model->xhrGetPageCount(
+            $_GET['searchWord'],
+            $_GET['selectedGenre'],
+            $_GET['selectedYear'],
+            (int)$_GET['pageNumber']
+        );
     }
 
 }
