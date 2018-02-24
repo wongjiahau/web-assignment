@@ -1,9 +1,4 @@
 <html>
-    <style>
-        .movieItem {
-            border: 1px solid black
-        }
-    </style>
     <body>
         <h1 id="header">retrieve movie</h1>
         <input id="searchInput" type="text"> 

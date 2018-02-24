@@ -9,6 +9,9 @@ class RetrieveMovie extends Controller
             'retrieveMovie/js/renderMovieItem.js',
             'retrieveMovie/js/renderPageLinks.js'
         );
+        $this->view->css = array(
+            'retrieveMovie/css/default.css'
+        );
     }
 
     function index()
