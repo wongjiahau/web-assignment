@@ -1,6 +1,6 @@
 const PAGE_LINK_LIMIT = 10;
 function renderPageLinks(pageCount, currentPage) {
-    if (pageCount == 1) {
+    if (pageCount <= 1) {
         return "";
     }
     var result = "";
@@ -49,12 +49,11 @@ function getPageLinkTemplate(currentPage, pageCount, pagePerSection) {
         }
         result += `${current + 1}|`;
     }
-    if (pageCount > pagePerSection) {
-        const lastSection = Math.ceil(pageCount / pagePerSection);
-        if (currentSection < lastSection - 1) {
+    if (pageCount > 1) {
+        if (currentPage < pageCount - 1) {
             result += ">";
         }
-        if (currentSection > 0) {
+        if (currentPage > 0) {
             result = "<|" + result;
         }
     }
