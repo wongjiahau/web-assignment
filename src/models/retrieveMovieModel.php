@@ -15,6 +15,7 @@ class RetrieveMovieModel extends Model
         where title like '%$searchWord%'
         and genre like '%$selectedGenre%'
         and year like '%$selectedYear%'
+        order by year desc
         limit $startIndex, $LIMIT
 QUERY;
         return $query;

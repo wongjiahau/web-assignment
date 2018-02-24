@@ -37,6 +37,15 @@ describe("retrieveMovieModel", function () {
             $res = $x->xhrGetMovie("co", "", "", $pageNo);
             expect(sizeof(json_decode($res)))->toBe(6);
         });
+
+        it("should sort movies based on descending years", function () {
+            $x = new RetrieveMovieModel();
+            $res1 = $x->xhrGetMovie("", "", "", 0);
+            $res2 = $x->xhrGetMovie("", "", "", 10);
+            $res1 = json_decode($res1);
+            $res2 = json_decode($res2);
+            expect($res1[0]->year)->toBeGreaterThan($res2[0]->year);
+        });
     });
 
     describe("xhrGetGenre", function () {
