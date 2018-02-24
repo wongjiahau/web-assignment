@@ -1,5 +1,5 @@
 <html>
-    <body>
+    <body id="retriveMoviePage">
         <h1 id="header">retrieve movie</h1>
         <input id="searchInput" type="text"> 
         <button id="searchBtn">SEARCH</button> 
@@ -12,11 +12,7 @@
             <option value="">Any</option>
         </select>
         <br>
-        <div id="pageLinks">
-
-        </div>
-        <div id="movieList">
-
-        </div>
+        <div id="pageLinks"></div>
+        <div id="movieList"></div>
     </body>
 </html>

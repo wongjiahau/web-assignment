@@ -1,4 +1,4 @@
-#movieList {
+#retriveMoviePage {
     text-align: center;
 }
 
@@ -39,4 +39,28 @@ td {
     padding: 0;
     margin: 0;
     vertical-align: top;
+}
+
+.pageLink {
+    border-radius: 5px;
+    margin-left: 3px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.pageLink:focus {
+    outline: 0;
+    background: lightgrey;
+    border-color: gray;
+}
+
+.focused {
+    background-color: lightseagreen;
+    border-color: lightseagreen;
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.focused:focus {
+    background: darkcyan;
 }
