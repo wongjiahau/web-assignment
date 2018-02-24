@@ -1,3 +1,42 @@
+#movieList {
+    text-align: center;
+}
+
 .movieItem {
-    border: 1px solid black
+    /* border: 1px solid black; */
+    width: 425px;
+    display: inline-block;
+    text-align: left;
+    margin: 0px;
+    margin-left: 5px;
+}
+
+.movieImage {
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+
+.movieItemTitle {
+    margin-bottom: 2px;
+    font-size: 19px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.movieItemGenre {
+    font-size: 13px;
+}
+
+.movieItemSynopsis {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+
+td {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
 }

@@ -3,14 +3,17 @@ function renderMovieItem(x) {
         <table>
             <tr>
                 <td>
-                    <img src='${x.img_path}'></img>
+                    <img class='movieImage' src='${x.img_path}'></img>
                 </td>
                 <td>
-                    <h3>${x.title} (${x.year})</h3>
-                    Genre: ${x.genre} <br>
-                    Synopsis: <article>${x.synopsis}</article>
+                    <span class='movieItemTitle'>${x.title} (${x.year})</span>
+                    <br/>
+                    <span class='movieItemGenre'><i>${x.genre}</i></span>
+                    <br/>
+                    <article class='movieItemSynopsis'>${x.synopsis}</article>
                 </td>
             </tr>
+            <tr><hr/></tr>
         </table> 
     </div>`;
 }
