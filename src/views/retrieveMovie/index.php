@@ -7,8 +7,14 @@
     <body>
         
         <h1 id="header">retrieve movie</h1>
-    <input id="searchInput" type="text" onkeypress="return searchOnKeyPress(event);"> 
-        <button id="searchBtn" onclick="submitWordSearchQuery();">SEARCH</button> 
+    <input id="searchInput" type="text"> 
+        <button id="searchBtn">SEARCH</button> 
+        <select id="genreSelect">
+            <option value="" disabled selected>Choose genre</option>
+        </select>
+        <select id="yearSelect">
+            <option value="" disabled selected>Choose year</option>
+        </select>
         <button id="genreBtn" onclick="renderGenres();">Choose Genre</button>
         <button id="yearBtn" onclick="renderYears();">Choose Year</button>
         <br>
@@ -22,7 +28,6 @@
 
         </div>
     </body>
-    <!-- <script src="./jquery.js" type="text/javascript"></script> -->
     <script lang="js">
         function searchOnKeyPress(e){
             const keyCodeOfEnter = 13;

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wongjiahau/web-assignment#readme",
   "dependencies": {
+    "@types/jquery": "^3.3.0",
     "jest": "^22.2.2"
   }
 }
