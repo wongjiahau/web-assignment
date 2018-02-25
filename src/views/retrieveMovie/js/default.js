@@ -1,6 +1,11 @@
 var _currentPage = 0;
 $(() => {
-    requestMovies();
+    // history.pushState(null, null, "www.google.com");
+    window.addEventListener('popstate', function (event) {
+        console.log("yo");
+        //TODO: pop search history
+    });
+    requestMovies(getSearchParams(0));
     requestGenres();
     requestYears();
     injectEventHandlers();
@@ -22,18 +27,17 @@ function requestYears() {
     }, 'json');
 }
 
-
 function injectEventHandlers() {
-    $('#searchBtn').click(() => requestMovies(0));
+    $('#searchBtn').click(() => requestMovies(getSearchParams(0)));
     $('#searchInput').keypress((e) => {
         const keyCodeOfEnter = 13;
         if (e.keyCode == keyCodeOfEnter) {
-            requestMovies(0);
+            requestMovies(getSearchParams(0));
         }
     });
 }
 
-function requestMovies(pageNumber = 0) {
+function requestMovies(searchParams) {
     const onSuccess = (response) => {
         const movies = JSON.parse(response);
         $('#movieList').html("");
@@ -46,9 +50,9 @@ function requestMovies(pageNumber = 0) {
         requestPageCount();
     }
     $
-        .get('retrieveMovie/xhrGetMovie', getSearchParams(pageNumber))
+        .get('retrieveMovie/xhrGetMovie', searchParams)
         .done(onSuccess);
-    _currentPage = pageNumber;
+    _currentPage = searchParams.pageNumber;
 }
 
 function requestPageCount() {
@@ -56,17 +60,16 @@ function requestPageCount() {
         const pageCount = response;
         $('#pageLinks').html(renderPageLinks(pageCount, _currentPage));
         for (let i = 0; i < pageCount; i++) {
-            $(`#pglink${i + 1}`).click(() => requestMovies(i));
+            $(`#pglink${i + 1}`).click(() => requestMovies(getSearchParams(i)));
         }
-        $('#prevBtn').click(() => requestMovies(_currentPage - 1));
-        $('#nextBtn').click(() => requestMovies(_currentPage + 1));
+        $('#prevBtn').click(() => requestMovies(getSearchParams(_currentPage - 1)));
+        $('#nextBtn').click(() => requestMovies(getSearchParams(_currentPage + 1)));
     }
     $
         .get('retrieveMovie/xhrGetPageCount', getSearchParams(0))
         .done(onSuccess);
 
 }
-
 
 function getSearchParams(pageNumber) {
     return {
