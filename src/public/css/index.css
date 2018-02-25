@@ -7,3 +7,7 @@ body {
     padding: 20px;
     background: gold;
 }
+#footer {
+    font-size: 12px;
+    text-align: right;
+}
