@@ -45,17 +45,9 @@ td {
 }
 
 .pageLink {
-    border-radius: 5px;
     margin-left: 3px;
-    border-style: solid;
-    cursor: pointer;
 }
 
-.pageLink:focus {
-    outline: 0;
-    background: lightgrey;
-    border-color: gray;
-}
 
 .focused {
     background-color: lightseagreen;

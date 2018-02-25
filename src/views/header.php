@@ -21,7 +21,7 @@
 </head>
 <body>
 <div id="header">
-    header
+    <span id="title">AAA Movie Library</span>
     <br/>
     <a href="index">Index</a>
     <a href="help">help</a>

@@ -10,10 +10,10 @@ function renderPageLinks(pageCount, currentPage) {
         .forEach(t => {
             switch (t) {
                 case '<':
-                    result += `<button class="pageLink" id="prevBtn">Previous</button>`;
+                    result += `<button class="pageLink clickable" id="prevBtn">Previous</button>`;
                     break;
                 case '>':
-                    result += `<button class="pageLink" id="nextBtn">Next</button>`;
+                    result += `<button class="pageLink clickable" id="nextBtn">Next</button>`;
                     break;
                 default:
                     if(t[0]=== '[') {
@@ -29,7 +29,7 @@ function renderPageLinks(pageCount, currentPage) {
 
 function singlePageLink(pageNumber, isFocused) {
     const id = `pglink${pageNumber}`;
-    const result = `<button class="pageLink ${isFocused ? "focused" : ""}" id="${id}">${pageNumber}</button>`
+    const result = `<button class="pageLink clickable ${isFocused ? "focused" : ""}" id="${id}">${pageNumber}</button>`
     return result;
 }
 
