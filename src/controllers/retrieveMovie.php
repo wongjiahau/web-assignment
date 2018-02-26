@@ -7,7 +7,8 @@ class RetrieveMovie extends Controller
         $this->view->js = array(
             'retrieveMovie/js/default.js',
             'retrieveMovie/js/renderMovieItem.js',
-            'retrieveMovie/js/renderPageLinks.js'
+            'retrieveMovie/js/renderPageLinks.js',
+            'retrieveMovie/js/ui.js'
         );
         $this->view->css = array(
             'retrieveMovie/css/default.css'
