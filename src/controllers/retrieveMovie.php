@@ -45,8 +45,7 @@ class RetrieveMovie extends Controller
         echo $this->model->xhrGetPageCount(
             $_GET['searchWord'],
             $_GET['selectedGenre'],
-            $_GET['selectedYear'],
-            (int)$_GET['pageNumber']
+            $_GET['selectedYear']
         );
     }
 

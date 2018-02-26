@@ -52,7 +52,7 @@ function requestPageCount(searchParams) {
         Ui.updatePageLinks(pageCount, _currentPage);
         Ui.injectNavigationHandler(pageCount, (i) => () => requestMovies(getSearchParams(i)));
         Ui.injectGoToPrevHandler(() => requestMovies(getSearchParams(_currentPage - 1)));
-        Ui.injecetGoToNextHandler(() => requestMovies(getSearchParams(_currentPage + 1)));
+        Ui.injectGoToNextHandler(() => requestMovies(getSearchParams(_currentPage + 1)));
     }
     $
         .get('retrieveMovie/xhrGetPageCount', searchParams)

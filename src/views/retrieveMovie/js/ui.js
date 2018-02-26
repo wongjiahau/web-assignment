@@ -19,13 +19,13 @@ class Ui {
         $('#prevBtn').click(callback);
     }
 
-    static injecetGoToNextHandler(callback) {
+    static injectGoToNextHandler(callback) {
         $('#nextBtn').click(callback);
     }
 
     static injectGoBackHandler(doubleCallback) {
         $(window).on('popstate', (event) => {
-            const prevSearchParams = event.state;
+            const prevSearchParams = event.originalEvent.state;
             if (prevSearchParams) {
                 doubleCallback(prevSearchParams)();
             }

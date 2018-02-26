@@ -88,5 +88,11 @@ describe("retrieveMovieModel", function () {
             $res = json_decode($x->xhrGetPageCount("walking"));
             expect($res)->toBe(1);
         });
+
+        it("case 2", function () {
+            $x = new RetrieveMovieModel();
+            $res = json_decode($x->xhrGetPageCount("", "", ""));
+            expect($res)->toBe(39);
+        });
     });
 });

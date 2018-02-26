@@ -7,30 +7,29 @@ class RetrieveMovieModel extends Model
         $this->PAGE_LIMIT = 10;
     }
 
-    public function getSubQuery($searchWord, $selectedGenre = "", $selectedYear = "", $pageNumber = 0)
+    public function getSubQuery($searchWord, $selectedGenre = "", $selectedYear = "")
     {
-        $LIMIT = $this->PAGE_LIMIT;
-        $startIndex = $pageNumber * $LIMIT;
-        $query = <<<QUERY
+        $query = "
         where title like '%$searchWord%'
         and genre like '%$selectedGenre%'
         and year like '%$selectedYear%'
-        order by year desc
-        limit $startIndex, $LIMIT
-QUERY;
+        ";
         return $query;
     }
 
     public function xhrGetMovie($searchWord, $selectedGenre = "", $selectedYear = "", $pageNumber = 0)
     {
-        $subquery = $this->getSubQuery($searchWord, $selectedGenre, $selectedYear, $pageNumber);
+        $subquery = $this->getSubQuery($searchWord, $selectedGenre, $selectedYear);
         $query = "select * from video " . $subquery;
+        $LIMIT = $this->PAGE_LIMIT;
+        $startIndex = $pageNumber * $LIMIT;
+        $query .= " order by year desc limit $startIndex, $LIMIT";
         return json_encode($this->queryDb($query));
     }
 
-    public function xhrGetPageCount($searchWord, $selectedGenre = "", $selectedYear = "", $pageNumber = 0)
+    public function xhrGetPageCount($searchWord, $selectedGenre = "", $selectedYear = "")
     {
-        $subquery = $this->getSubQuery($searchWord, $selectedGenre, $selectedYear, $pageNumber);
+        $subquery = $this->getSubQuery($searchWord, $selectedGenre, $selectedYear);
         $query = "select count(*) as count from video " . $subquery;
         $result = $this->queryDb($query);
         $count = ceil((int)($result[0]['count']) / $this->PAGE_LIMIT);
