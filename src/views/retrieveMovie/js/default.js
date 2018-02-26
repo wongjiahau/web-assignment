@@ -1,10 +1,5 @@
 var _currentPage = 0;
 $(() => {
-    // history.pushState(null, null, "www.google.com");
-    window.addEventListener('popstate', function (event) {
-        console.log("yo");
-        //TODO: pop search history
-    });
     requestMovies(getSearchParams(0));
     requestGenres();
     requestYears();
@@ -35,27 +30,38 @@ function injectEventHandlers() {
             requestMovies(getSearchParams(0));
         }
     });
+    window.addEventListener('popstate', function (event) {
+        const prevSearchParams = event.state;
+        if (prevSearchParams) {
+            requestMovies(prevSearchParams, false);
+            setSearchParams(prevSearchParams);
+        }
+    });
 }
 
-function requestMovies(searchParams) {
+function requestMovies(searchParams, updateHistory = true) {
     const onSuccess = (response) => {
         const movies = JSON.parse(response);
         $('#movieList').html("");
         if (movies.length == 0) {
             $('#movieList').append("<p>No result found.</p>")
+            $('#movieList').append("<a href='javascript:history.back()'>Click here to go back</a>")
         }
         movies.forEach(movie => {
             $('#movieList').append(renderMovieItem(movie));
         });
-        requestPageCount();
+        requestPageCount(searchParams);
     }
     $
         .get('retrieveMovie/xhrGetMovie', searchParams)
         .done(onSuccess);
     _currentPage = searchParams.pageNumber;
+    if (updateHistory) {
+        history.pushState(searchParams, null, null);
+    }
 }
 
-function requestPageCount() {
+function requestPageCount(searchParams) {
     const onSuccess = (response) => {
         const pageCount = response;
         $('#pageLinks').html(renderPageLinks(pageCount, _currentPage));
@@ -66,7 +72,7 @@ function requestPageCount() {
         $('#nextBtn').click(() => requestMovies(getSearchParams(_currentPage + 1)));
     }
     $
-        .get('retrieveMovie/xhrGetPageCount', getSearchParams(0))
+        .get('retrieveMovie/xhrGetPageCount', searchParams)
         .done(onSuccess);
 
 }
@@ -78,4 +84,10 @@ function getSearchParams(pageNumber) {
         selectedYear: $('#yearSelect').val(),
         pageNumber: pageNumber
     };
+}
+
+function setSearchParams(params) {
+    $('#searchInput').val(params.searchWord);
+    $('#genreSelect').val(params.selectedGenre);
+    $('#yearSelect').val(params.selectedYear);
 }
