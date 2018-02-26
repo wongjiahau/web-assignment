@@ -22,7 +22,7 @@ class LoginModel extends Model
 
         if (password_verify($password, $passwordHash)) {
             return array(
-                'url' => 'dashboard',
+                'url' => 'retrieveMovie',
                 'session' => array(
                     'key' => 'loggedIn',
                     'value' => true
