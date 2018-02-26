@@ -7,6 +7,8 @@ class Ui {
                 callback();
             }
         });
+        $('#genreSelect').change(callback);
+        $('#yearSelect').change(callback);
     }
 
     static injectNavigationHandler(pageCount, doubleCallback) {

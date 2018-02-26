@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 body {
     background: silver;
     font-family: 'Open Sans', serif;
