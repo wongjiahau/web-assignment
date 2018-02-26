@@ -11,3 +11,5 @@ require_once(__ROOT__ . '/src/libs/stateManager.php');
 
 require_once(__ROOT__ . '/src/config/paths.php');
 require_once(__ROOT__ . '/src/config/dbconfig.php');
+
+require_once(__ROOT__ . '/src/models/movie.php');

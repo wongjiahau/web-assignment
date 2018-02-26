@@ -6,6 +6,20 @@ class Model
         $this->db = new Database();
     }
 
+    function beginTransaction() {
+        $this->db->beginTransaction();
+    }
+
+    function rollBack() {
+        $this->db->rollBack();
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->db->lastInsertId();
+    }
+
+
     function queryDb($query, $paramMap = array())
     {
         // Tips: sth means Statement-Handler

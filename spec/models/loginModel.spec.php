@@ -14,7 +14,7 @@ describe("loginModel", function () {
             $newState = $x->run($correctId, $correctPassword);
             expect($newState)->toBe(
                 array(
-                    'url' => 'dashboard',
+                    'url' => 'retrieveMovie',
                     'session' => array(
                         'key' => 'loggedIn',
                         'value' => true
