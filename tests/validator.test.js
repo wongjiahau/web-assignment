@@ -1,4 +1,4 @@
-const v = require('../home/admin/validator');
+const v = require('../src/jslibs/validator');
 
 describe("isEmpty", () => {
     it("case 1", () => {
