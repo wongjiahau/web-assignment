@@ -1,3 +1,33 @@
 #createMovieDiv {
     text-align: center;
 }
+
+#createMovieForm {
+    text-align: left;
+}
+
+#formLabel {
+    text-align: right;
+    font-size: 14px;
+    padding-bottom: 2.5px;
+    padding-right: 5px;
+}
+
+.formInput {
+    width: 300px;
+    background: white;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+table,
+tr,
+td {
+    margin: 0 auto;
+    padding: 0px;
+    vertical-align: bottom;
+}
+
+.errorMessage {
+    color: red
+}

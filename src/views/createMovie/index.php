@@ -1,39 +1,49 @@
 <?php
-function generateInput($name) {
-    echo "<input placeholder='$name' type='text' name='$name' id='${name}Input'> ";
-    echo "<div class='errorMessage' id='${name}Error'></div>";
+
+echo exec('whoami');
+function getLabel($label)
+{
+    echo "
+    <tr>
+        <td id='formLabel'>$label</td>
+        <td><input class='formInput' type='text' name='$label' id='${label}Input'></td>
+        <td><span class='errorMessage' id='${label}Error'></span></td>
+    </tr>
+    ";
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-if (isset($_POST['Title'])) {
-    echo $_POST['Title'];
-    return;
-}
 ?>
 <html>
     <head>
-        <style>
-            .errorMessage {
-                color:red
-            }
-        </style>
-        <script src='<?php echo URL;?>jslibs/validator.js'> </script>
+        <script src='<?php echo URL; ?>jslibs/validator.js'> </script>
     </head>
     <body>
-        <div id="createMovieDiv">
-            <h1>Create new movie</h1>
-            <form id="createMovieForm" action="createMovie/run" method="post">
-                <?php
-                generateInput("Title");
-                generateInput("Year");
-                generateInput("Genre");
-                generateInput("Synopsis");
-                ?>
-                Image: <input type="text" name="Image" id="imageInput"><br>
+        <form id="createMovieForm" action="createMovie/run" method="post" enctype="multipart/form-data">
+            <div id="createMovieDiv">
+                <h1>Create new movie</h1>
+                <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <?php
+                        getLabel("Title");
+                        ?>
+                        <tr>
+                            <td id="formLabel"> Genre </td>
+                            <td> <select name="Genre" id="genreSelect" class="clickable formInput"></select> </td>
+                        </tr>
+                        <tr>
+                            <td id="formLabel"> Year </td>
+                            <td> <select name="Year" id="yearSelect" class="clickable formInput"></select> </td>
+                        </tr>
+                        <tr>
+                            <td id="formLabel"> Synopsis </td>
+                            <td> <textarea name="Synopsis" class="formInput"></textarea> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                Image: <input type="file" name="Image" id="imageInput"><br>
                 <input type="submit" value="submit">
-            </form>
-        </div>
+            </div>
+        </form>
         
     </body>
 </html>

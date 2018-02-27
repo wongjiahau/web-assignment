@@ -16,5 +16,6 @@ create table video (
     year int not null,
     genre varchar(100) not null,
     img_path varchar(300) not null,
-    synopsis varchar(1000)
+    synopsis varchar(1000),
+    ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) engine = InnoDB;

@@ -4,7 +4,7 @@ class Bootstrap
     function __construct()
     {
         // Turn on error reporting
-        error_reporting(E_ALL);
+        error_reporting(E_ALL|E_STRICT);
         ini_set('display_errors', 1);
 
         if (!isset($_GET['url'])) {

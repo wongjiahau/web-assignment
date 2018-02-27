@@ -1,8 +1,27 @@
 $(()=>{
+    getYearOptions();
+    getGenreOptions();
     $('#createMovieForm').submit(() => {
         return validateForm();
     });
 });
+
+function getYearOptions() {
+    const FIRST_YEAR = 1878; // Refer this: https://headsup.boyslife.org/what-was-the-first-movie-ever-made/
+    const currentYear = (new Date()).getFullYear();
+    for (let i = currentYear; i >= FIRST_YEAR ; i--) {
+        $('#yearSelect').append(`<option value=${i}>${i}</option>`)
+        
+    }
+}
+
+function getGenreOptions() {
+    $.get('retrieveMovie/xhrGetGenre', (response) => {
+        response.forEach(x => {
+            $('#genreSelect').append(`<option value=${x}>${x}</option>`)
+        });
+    }, 'json');
+}
 
 function validateForm() {
     let gotError = false;

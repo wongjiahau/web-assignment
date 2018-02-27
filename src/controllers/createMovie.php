@@ -19,12 +19,14 @@ class CreateMovie extends Controller
 
     function run()
     {
+        $x = new UploadedFileSaver("Image");
+        $img_path = $x->targetFile;
         $this->model->run(
             new Movie(
                 $_POST['Title'],
                 $_POST['Year'],
                 $_POST['Genre'],
-                $_POST['Image'],
+                $img_path,
                 $_POST['Synopsis']
             )
         );
