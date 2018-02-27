@@ -1,6 +1,5 @@
 <?php
 
-echo exec('whoami');
 function getLabel($label)
 {
     echo "

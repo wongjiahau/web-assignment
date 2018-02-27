@@ -20,6 +20,7 @@ describe("createMovieModel", function () {
                 )
             );
             $data = $x->queryDb("select * from video where title='Sample movie'")[0];
+            unset($data["ts"]); // unset timestamp property
             expect($data)->toBe(array(
                 "video_id" => "385",
                 "title"    => "Sample movie",

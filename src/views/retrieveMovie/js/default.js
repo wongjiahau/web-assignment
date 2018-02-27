@@ -1,6 +1,6 @@
 var _currentPage = 0;
 $(() => {
-    requestMovies(getSearchParams(0));
+    requestInitialMovies();
     requestGenres();
     requestYears();
     injectEventHandlers();
@@ -24,6 +24,16 @@ function injectEventHandlers() {
         requestMovies(params, false);
         setSearchParams(params);
     });
+}
+
+function requestInitialMovies() {
+    $
+        .get('retrieveMovie/xhrGetNewMovie', {})
+        .done((response) => {
+            const movies = JSON.parse(response);
+            Ui.updateMovieList(movies);
+            requestPageCount(getSearchParams(0));
+        });
 }
 
 function requestMovies(searchParams, updateHistory = true) {

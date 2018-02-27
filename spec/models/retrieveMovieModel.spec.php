@@ -21,7 +21,12 @@ function is_sorted($array)
     }
 }
 
+//Clean up database
+$db = new Model();
+$db->queryDb("delete from video where video_id > 384");
+
 require_once(__ROOT__ . '/src/models/retrieveMovieModel.php');
+require_once(__ROOT__ . '/src/models/createMovieModel.php');
 describe("retrieveMovieModel", function () {
     describe("xhrGetMovie", function () {
         it("case 1", function () {
@@ -93,6 +98,19 @@ describe("retrieveMovieModel", function () {
             $x = new RetrieveMovieModel();
             $res = json_decode($x->xhrGetPageCount("", "", ""));
             expect($res)->toBe(39);
+        });
+    });
+
+    describe("getNewMovies", function () {
+        it("case 1", function () {
+            $c = new CreateMovieModel();
+            $c->run(
+                new Movie("Newly inserted", "1999", "", "", "")
+            );
+            $x = new RetrieveMovieModel();
+            $res = json_decode($x->xhrGetNewMovie());
+            expect($res[0]->title)->toBe("Newly inserted");
+            $x->queryDb("delete from video where title = 'Newly inserted'");
         });
     });
 });

@@ -20,6 +20,10 @@ class RetrieveMovie extends Controller
         $this->view->render('retrieveMovie/index');
     }
 
+    function xhrGetNewMovie() {
+        echo $this->model->xhrGetNewMovie();
+    }
+
     function xhrGetMovie()
     {
         echo $this->model->xhrGetMovie(

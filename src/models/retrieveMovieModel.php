@@ -17,15 +17,30 @@ class RetrieveMovieModel extends Model
         return $query;
     }
 
+    public function getLimitQuery($pageNumber, $orderbyWhat)
+    {
+        $LIMIT = $this->PAGE_LIMIT;
+        $startIndex = $pageNumber * $LIMIT;
+        return " order by $orderbyWhat desc limit $startIndex, $LIMIT";
+    }
+
     public function xhrGetMovie($searchWord, $selectedGenre = "", $selectedYear = "", $pageNumber = 0)
     {
         $subquery = $this->getSubQuery($searchWord, $selectedGenre, $selectedYear);
         $query = "select * from video " . $subquery;
-        $LIMIT = $this->PAGE_LIMIT;
-        $startIndex = $pageNumber * $LIMIT;
-        $query .= " order by year desc limit $startIndex, $LIMIT";
+        $query .= $this->getLimitQuery($pageNumber, "year");
         return json_encode($this->queryDb($query));
     }
+
+    public function xhrGetNewMovie()
+    {
+        $subquery = $this->getSubQuery("", "", "");
+        $query = 
+            "select * from video " . $subquery .
+            $this->getLimitQuery(0, "ts");
+        return json_encode($this->queryDb($query));
+    }
+
 
     public function xhrGetPageCount($searchWord, $selectedGenre = "", $selectedYear = "")
     {

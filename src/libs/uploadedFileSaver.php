@@ -3,18 +3,17 @@
 class UploadedFileSaver
 {
 
-    function __construct($nameOfFileToUpload)
+    function __construct($file)
     {
-        $file = $_FILES[$nameOfFileToUpload];
         $target_file = IMG_UPLOAD_DIR . $file["name"];
 
-        $uploadOk = 
+        $this->uploadSuccess = 
             $this->imageIsReal($file) &&
             $this->imageIsNotDuplicated($target_file) &&
             $this->imageIsNotOversized($file) &&
             $this->imageFormatIsValid($target_file);
 
-        if (!$uploadOk) {
+        if (!$this->uploadSuccess) {
             echo "Sorry, your file was not uploaded.";
             return;
         }
