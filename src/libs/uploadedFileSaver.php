@@ -5,51 +5,72 @@ class UploadedFileSaver
 
     function __construct($nameOfFileToUpload)
     {
-        echo exec('whoami');
-        $target_dir = "/php_uploads/";
-        $target_file = $target_dir . basename($_FILES[$nameOfFileToUpload]["tmp_name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-// Check if image file is a actual image or fake image
-        if (isset($_POST["submit"])) {
-            $check = getimagesize($_FILES[$nameOfFileToUpload]["tmp_name"]);
-            if ($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
-        }
-// Check if file already exists
-        if (file_exists($target_file)) {
-            echo "Sorry, file already exists.";
-            $uploadOk = 0;
-        }
-// Check file size
-        if ($_FILES[$nameOfFileToUpload]["size"] > 500000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
-        }
-// Allow certain file formats
-        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif") {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
-        }
-// Check if $uploadOk is set to 0 by an error
-        if ($uploadOk != 0) {
+        $file = $_FILES[$nameOfFileToUpload];
+        $target_file = IMG_UPLOAD_DIR . $file["name"];
+
+        $uploadOk = 
+            $this->imageIsReal($file) &&
+            $this->imageIsNotDuplicated($target_file) &&
+            $this->imageIsNotOversized($file) &&
+            $this->imageFormatIsValid($target_file);
+
+        if (!$uploadOk) {
             echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($_FILES[$nameOfFileToUpload]["tmp_name"], $target_file)) {
-                echo "The file " . basename($_FILES[$nameOfFileToUpload]["name"]) . " has been uploaded.";
-            } else {
-                echo "Sorry, there was an error uploading your file.";
-            }
+            return;
         }
 
-        $this->targetFile = $target_file;
+        if (move_uploaded_file($file["tmp_name"], IMG_UPLOAD_DIR . basename($file["tmp_name"]))) {
+            echo "The file " . basename($file["name"]) . " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+
+        $this->targetFile = '../php_uploads/' . basename($file["tmp_name"]);
+    }
+
+    function imageIsReal($file)
+    {
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($file["tmp_name"]);
+        if ($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            return true;
+        } else {
+            echo "File is not an image.";
+            return false;
+        }
+    }
+
+    function imageIsNotDuplicated($target_file)
+    {
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            echo "Sorry, file already exists.";
+            return false;
+        }
+        return true;
+    }
+
+    function imageIsNotOversized($file)
+    {
+        $SIZE_LIMIT = 500000;
+        if ($file["size"] > $SIZE_LIMIT) {
+            echo "Sorry, your file is too large.";
+            return false;
+        }
+        return true;
+    }
+
+    function imageFormatIsValid($target_file)
+    {
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif") {
+            echo "File type of $imageFileType is not allowed. Only JPG, JPEG, PNG & GIF files are allowed.";
+            return false;
+        }
+        return true;
     }
 
 }
