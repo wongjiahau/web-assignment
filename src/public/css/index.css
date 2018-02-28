@@ -23,16 +23,22 @@ input:focus {
 .clickable {
     border-radius: 5px;
     border-style: solid;
+    border: 1px solid lightgrey;
     cursor: pointer;
     height: 25px;
     text-align: center;
 }
 
+
+.clickable:active {
+    filter: brightness(85%);
+    box-shadow: inset 0px 0px 10px grey;
+}
+
 .clickable:focus {
     outline: 0;
-    background: lightgrey;
-    border-color: gray;
 }
+
 
 .primary {
     background: blue;

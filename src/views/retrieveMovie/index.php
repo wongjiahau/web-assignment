@@ -15,4 +15,5 @@
     <br>
     <div id="pageLinks"></div>
     <div id="movieList"></div>
+    <div id="createMoviePanel"></div>
 </div>

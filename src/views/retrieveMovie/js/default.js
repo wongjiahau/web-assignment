@@ -3,6 +3,7 @@ var _isAdminSession = false;
 $(() => {
     $.get('retrieveMovie/xhrGetIsAdminSession', (response) => {
         _isAdminSession = JSON.parse(response);
+        if(_isAdminSession) { Ui.renderCreateMovieButton(); }
         requestInitialMovies();
         requestGenres();
         requestYears();

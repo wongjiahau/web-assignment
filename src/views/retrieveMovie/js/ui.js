@@ -65,4 +65,8 @@ class Ui {
         })
     }
 
+    static renderCreateMovieButton() {
+        $('#createMoviePanel').html(`<button class='clickable createBtn'>Add new movie</button>`);
+    }
+
 };
