@@ -11,7 +11,7 @@ class MovieItemRenderer {
                     <img class='movieImage' src='${x.img_path}'></img>
                 </td>
                 <td>
-                    <span class='movieItemTitle'>${x.title} (${x.year})</span>
+                    <span id='movieTitle${x.video_id}' class='movieItemTitle'>${x.title} (${x.year})</span>
                     <br/>
                     <span class='movieItemGenre'><i>${x.genre}</i></span>
                     <br/>

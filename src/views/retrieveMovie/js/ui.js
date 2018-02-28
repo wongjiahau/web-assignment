@@ -23,7 +23,12 @@ class Ui {
             .forEach(x => $(x).click(editMovieDoubleCallback($(x).attr("tag"))));
         $('.delBtn')
             .toArray()
-            .forEach(x => $(x).click(deleteMovieDoubleCallback($(x).attr("tag"))));
+            .forEach(x => $(x).click(() => {
+                const video_id = $(x).attr("tag");
+                if(window.confirm(`Are you sure you want to delete ${$(`#movieTitle${video_id}`).html()}?`)) {
+                    deleteMovieDoubleCallback(video_id)();
+                }
+            }));
     }
     static injectSearchHandler(callback) {
         $(Id.searchBtn).click(callback);
