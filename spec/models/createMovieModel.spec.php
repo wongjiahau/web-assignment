@@ -9,7 +9,6 @@ describe("createMovieModel", function () {
     describe("run", function () {
         it("positive case", function () {
             $x = new CreateMovieModel();
-            $x->beginTransaction(); // This is to make sure that the insert statement is not commited
             $x->run(
                 new Movie(
                     "Sample movie",
@@ -29,6 +28,7 @@ describe("createMovieModel", function () {
                 "img_path" => "google.com",
                 "synopsis" => "This is a sample"
             ));
+            $x->queryDb("delete from video where title='Sample movie'");
         });
     });
 });

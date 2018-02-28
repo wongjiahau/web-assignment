@@ -4,7 +4,7 @@ class MovieItemRenderer {
     }
 
     render(x) {
-        return `<div class='movieItem' id='movieItem${x.video_id}' tag='${x.video_id}'>
+        return `<div class='movieItem' id='movieItem${x.video_id}'>
         <table>
             <tr>
                 <td>
@@ -18,8 +18,8 @@ class MovieItemRenderer {
                     <article class='movieItemSynopsis'>${x.synopsis}</article>
                     ${this.renderWithAdminOptions ? `
                         <div class='adminPanel'>
-                            <button class='clickable delBtn'>Delete</button>
-                            <button class='clickable editBtn'>Edit</button>
+                            <button tag='${x.video_id}' class='clickable delBtn'>Delete</button>
+                            <button tag='${x.video_id}' class='clickable editBtn'>Edit</button>
                         </div> ` : "" 
                     }
                 </td>

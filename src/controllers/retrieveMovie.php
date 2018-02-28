@@ -6,7 +6,7 @@ class RetrieveMovie extends Controller
         parent::__construct();
         $this->view->js = array(
             'retrieveMovie/js/default.js',
-            'retrieveMovie/js/renderMovieItem.js',
+            'retrieveMovie/js/movieItemRenderer.js',
             'retrieveMovie/js/renderPageLinks.js',
             'retrieveMovie/js/ui.js'
         );
