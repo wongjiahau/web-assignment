@@ -1,4 +1,4 @@
-$(()=>{
+$(() => {
     getYearOptions();
     getGenreOptions();
     $('#createMovieForm').submit(() => {
@@ -9,34 +9,32 @@ $(()=>{
 function getYearOptions() {
     const FIRST_YEAR = 1878; // Refer this: https://headsup.boyslife.org/what-was-the-first-movie-ever-made/
     const currentYear = (new Date()).getFullYear();
-    for (let i = currentYear; i >= FIRST_YEAR ; i--) {
-        $('#yearSelect').append(`<option value=${i}>${i}</option>`)
-        
+    for (let i = currentYear; i >= FIRST_YEAR; i--) {
+        $('#YearInput').append(`<option value=${i}>${i}</option>`)
+
     }
 }
 
 function getGenreOptions() {
     $.get('retrieveMovie/xhrGetGenre', (response) => {
         response.forEach(x => {
-            $('#genreSelect').append(`<option value=${x}>${x}</option>`)
+            $('#GenreInput').append(`<option value=${x}>${x}</option>`)
         });
     }, 'json');
 }
 
 function validateForm() {
-    let gotError = false;
-    function validate(name) {
-        const errorMessage = v(document.getElementById(name + "Input").value).isInvalid[name]();
-        document
-            .getElementById(name + "Error")
-            .innerHTML = errorMessage;
-        if (errorMessage.length > 0) {
-            gotError = true;
-        }
+    function validate(type) {
+        const errorMessage = v($(`#${type}Input`).val()).isInvalid[type]();
+        $(`#${type}Error`).html(errorMessage);
+        return errorMessage.length === 0;
     }
-    validate("Title");
-    validate("Year");
-    validate("Genre");
-    validate("Synopsis");
-    return !gotError;
+
+    const isValid = 
+        validate("Title") && 
+        validate("Year") && 
+        validate("Genre") && 
+        validate("Synopsis") &&
+        validate("Image")
+    return isValid;
 }

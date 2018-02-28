@@ -16,6 +16,7 @@ function NullValidatorChain(errorMessage) {
     this.Year = () => errorMessage;
     this.Genre = () => errorMessage;
     this.Synopsis = () => errorMessage;
+    this.Image = () => errorMessage;
 }
 
 function ValidatorChain(str) {
@@ -54,8 +55,11 @@ function ValidatorChain(str) {
 
     this.Synopsis = () => {
         return this.Title();
-    }
+    } 
 
+    this.Image = () => {
+        return "";
+    }
 }
 
 function isValidTitle(str) {

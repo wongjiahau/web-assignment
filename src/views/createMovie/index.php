@@ -1,14 +1,30 @@
 <?php
 
-function getLabel($label)
+function getLabel($label, $renderer)
 {
     echo "
     <tr>
-        <td id='formLabel'>$label</td>
-        <td><input class='formInput' type='text' name='$label' id='${label}Input'></td>
+        <td id='formLabel'>$label</td> 
+        <td>" . $renderer($label) . "</td>
         <td><span class='errorMessage' id='${label}Error'></span></td>
     </tr>
     ";
+}
+
+function textInputRenderer($label) {
+    return "<input class='formInput' type='text' name='$label' id='${label}Input'>";
+}
+
+function selectRenderer($label) {
+    return "<select class='formInput' name='$label' id='${label}Input'></select>";
+}
+
+function textareaRenderer($label) {
+    return "<textarea class='formInput' name='$label' id='${label}Input'></textarea>";
+}
+
+function imageInputRenderer($label) {
+    return "<input type='file' name='$label' id='${label}Input'>";
 }
 
 ?>
@@ -23,23 +39,14 @@ function getLabel($label)
                 <table cellspacing="0" cellpadding="0">
                     <tbody>
                         <?php
-                        getLabel("Title");
+                        getLabel("Title", "textInputRenderer");
+                        getLabel("Genre", "selectRenderer");
+                        getLabel("Year", "selectRenderer");
+                        getLabel("Synopsis", "textareaRenderer");
+                        getLabel("Image", "imageInputRenderer");
                         ?>
-                        <tr>
-                            <td id="formLabel"> Genre </td>
-                            <td> <select name="Genre" id="genreSelect" class="clickable formInput"></select> </td>
-                        </tr>
-                        <tr>
-                            <td id="formLabel"> Year </td>
-                            <td> <select name="Year" id="yearSelect" class="clickable formInput"></select> </td>
-                        </tr>
-                        <tr>
-                            <td id="formLabel"> Synopsis </td>
-                            <td> <textarea name="Synopsis" class="formInput"></textarea> </td>
-                        </tr>
                     </tbody>
                 </table>
-                Image: <input type="file" name="Image" id="imageInput"><br>
                 <input type="submit" value="submit">
             </div>
         </form>

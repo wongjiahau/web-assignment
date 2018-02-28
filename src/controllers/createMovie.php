@@ -6,6 +6,7 @@ class CreateMovie extends Controller
         parent::__construct();
         $this->view->js = array(
             'createMovie/js/default.js',
+            'createMovie/js/default.js',
         );
         $this->view->css = array(
             'createMovie/css/default.css'
