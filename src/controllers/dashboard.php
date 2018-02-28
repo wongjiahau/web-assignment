@@ -4,7 +4,7 @@ class Dashboard extends Controller
     function __construct()
     {
         parent::__construct();
-        if (!Session::get('loggedIn')) {
+        if (!Session::get('adminLoggedIn')) {
             Session::destroy();
             Navigator::goto('login');
             exit;

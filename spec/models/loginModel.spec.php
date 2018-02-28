@@ -16,7 +16,7 @@ describe("loginModel", function () {
                 array(
                     'url' => 'retrieveMovie',
                     'session' => array(
-                        'key' => 'loggedIn',
+                        'key' => 'adminLoggedIn',
                         'value' => true
                     )
                 )

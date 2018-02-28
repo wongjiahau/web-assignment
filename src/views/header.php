@@ -25,7 +25,7 @@
     <br/>
     <a href="index">Index</a>
     <a href="help">help</a>
-    <?php if (Session::get('loggedIn')) : ?>
+    <?php if (Session::get('adminLoggedIn')) : ?>
         <a href="dashboard/logout">Logout</a>
     <?php else : ?>
         <a href="login">Login</a>
