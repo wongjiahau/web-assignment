@@ -1,5 +1,10 @@
-function renderMovieItem(x) {
-    return `<div class='movieItem' id='movieItem${x.video_id}'>
+class MovieItemRenderer {
+    constructor(renderWithAdminOptions = false) {
+        this.renderWithAdminOptions = renderWithAdminOptions;
+    }
+
+    render(x) {
+        return `<div class='movieItem' id='movieItem${x.video_id}' tag='${x.video_id}'>
         <table>
             <tr>
                 <td>
@@ -11,9 +16,17 @@ function renderMovieItem(x) {
                     <span class='movieItemGenre'><i>${x.genre}</i></span>
                     <br/>
                     <article class='movieItemSynopsis'>${x.synopsis}</article>
+                    ${this.renderWithAdminOptions ? `
+                        <div class='adminPanel'>
+                            <button class='clickable delBtn'>Delete</button>
+                            <button class='clickable editBtn'>Edit</button>
+                        </div> ` : "" 
+                    }
                 </td>
             </tr>
             <tr><hr/></tr>
         </table> 
     </div>`;
+
+    }
 }

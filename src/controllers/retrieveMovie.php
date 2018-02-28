@@ -11,7 +11,10 @@ class RetrieveMovie extends Controller
             'retrieveMovie/js/ui.js'
         );
         $this->view->css = array(
-            'retrieveMovie/css/default.css'
+            'retrieveMovie/css/admin.css',
+            'retrieveMovie/css/default.css',
+            'retrieveMovie/css/movie.css',
+            'retrieveMovie/css/pageLink.css'
         );
     }
 

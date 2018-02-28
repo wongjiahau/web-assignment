@@ -1,0 +1,15 @@
+.adminPanel {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+}
+
+.delBtn {
+    background: darkred;
+    color: whitesmoke;
+}
+
+.editBtn {
+    background: darkgreen;
+    color: whitesmoke;
+}

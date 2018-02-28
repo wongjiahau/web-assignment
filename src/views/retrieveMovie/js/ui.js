@@ -38,9 +38,10 @@ class Ui {
         $('#pageLinks').html(renderPageLinks(pageCount, currentPage));
     }
 
-    static updateMovieList(movies) {
+    static updateMovieList(movies, renderWithAdminOptions = false) {
+        const x = new MovieItemRenderer(renderWithAdminOptions);
         movies.forEach(movie => {
-            $('#movieList').append(renderMovieItem(movie));
+            $('#movieList').append(x.render(movie));
         });
     }
     static clearMovieList() {
