@@ -1,9 +1,13 @@
 var _currentPage = 0;
+var _isAdminSession = false;
 $(() => {
-    requestInitialMovies();
-    requestGenres();
-    requestYears();
-    injectEventHandlers();
+    $.get('retrieveMovie/xhrGetIsAdminSession', (response) => {
+        _isAdminSession = JSON.parse(response);
+        requestInitialMovies();
+        requestGenres();
+        requestYears();
+        injectEventHandlers();
+    })
 });
 
 function requestGenres() {
@@ -31,7 +35,7 @@ function requestInitialMovies() {
         .get('retrieveMovie/xhrGetNewMovie', {})
         .done((response) => {
             const movies = JSON.parse(response);
-            Ui.updateMovieList(movies);
+            Ui.updateMovieList(movies, _isAdminSession);
             requestPageCount(getSearchParams(0));
         });
 }
@@ -43,7 +47,7 @@ function requestMovies(searchParams, updateHistory = true) {
         if (movies.length == 0) {
             Ui.reportNoMovieFound();
         } else {
-            Ui.updateMovieList(movies);
+            Ui.updateMovieList(movies, _isAdminSession);
             requestPageCount(searchParams);
         }
     }

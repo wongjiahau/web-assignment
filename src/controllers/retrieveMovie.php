@@ -23,7 +23,8 @@ class RetrieveMovie extends Controller
         $this->view->render('retrieveMovie/index');
     }
 
-    function xhrGetNewMovie() {
+    function xhrGetNewMovie()
+    {
         echo $this->model->xhrGetNewMovie();
     }
 
@@ -37,12 +38,12 @@ class RetrieveMovie extends Controller
         );
     }
 
-    function xhrGetGenre() 
+    function xhrGetGenre()
     {
         echo $this->model->xhrGetGenre();
     }
 
-    function xhrGetYear() 
+    function xhrGetYear()
     {
         echo $this->model->xhrGetYear();
     }
@@ -54,6 +55,16 @@ class RetrieveMovie extends Controller
             $_GET['selectedGenre'],
             $_GET['selectedYear']
         );
+    }
+
+    function xhrGetIsAdminSession()
+    {
+        Session::start();
+        if(isset($_SESSION["adminLoggedIn"])) {
+            echo "true";
+        } else {
+            echo "false";
+        }
     }
 
 }
