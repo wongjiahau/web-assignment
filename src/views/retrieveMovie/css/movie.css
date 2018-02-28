@@ -39,3 +39,12 @@ td {
     margin: 0;
     vertical-align: top;
 }
+
+.deleted {
+    position: absolute;
+    bottom: 22%;
+    right: 25%;
+    font-size: 40px;
+    text-shadow: 2px 2px grey;
+    transform: rotate(-30deg);
+}

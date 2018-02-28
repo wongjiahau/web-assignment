@@ -3,13 +3,12 @@ var _isAdminSession = false;
 $(() => {
     $.get('retrieveMovie/xhrGetIsAdminSession', (response) => {
         _isAdminSession = JSON.parse(response);
-        if(_isAdminSession) { Ui.renderCreateMovieButton(); }
         requestInitialMovies();
         requestGenres();
         requestYears();
-        injectEventHandlers();
     })
 });
+
 
 function requestGenres() {
     $.get('retrieveMovie/xhrGetGenre', (response) => {
@@ -29,6 +28,24 @@ function injectEventHandlers() {
         requestMovies(params, false);
         setSearchParams(params);
     });
+    if (_isAdminSession) {
+        renderAdminUi();
+    }
+}
+
+function renderAdminUi() {
+    Ui.renderCreateMovieButton();
+    Ui.injectCreateMovieHandler(() => window.location = ('createMovie'));
+    Ui.injectUpdateMovieHandler(() => console.log("edit"), 
+        (video_id) => () => {
+            $.get('deleteMovie/xhrRun', {video_id})
+            .done((response) => {
+                const deleteSuccess = JSON.parse(response);
+                if(deleteSuccess) {
+                    Ui.markMovieAsDeleted(video_id);
+                }
+            });
+    });
 }
 
 function requestInitialMovies() {
@@ -38,6 +55,7 @@ function requestInitialMovies() {
             const movies = JSON.parse(response);
             Ui.updateMovieList(movies, _isAdminSession);
             requestPageCount(getSearchParams(0));
+            injectEventHandlers();
         });
 }
 
@@ -50,6 +68,7 @@ function requestMovies(searchParams, updateHistory = true) {
         } else {
             Ui.updateMovieList(movies, _isAdminSession);
             requestPageCount(searchParams);
+            injectEventHandlers();
         }
     }
     $

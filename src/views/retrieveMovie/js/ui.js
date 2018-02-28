@@ -1,14 +1,40 @@
+const Id = {
+    searchBtn: '#searchBtn',
+    searchInput: '#searchInput',
+    genreSelect: '#genreSelect',
+    yearSelect: '#yearSelect',
+    movieList: '#movieList',
+    createMoviePanel: '#createMoviePanel',
+    pageLinks: '#pageLinks',
+    prevBtn: '#prevBtn',
+    nextBtn: '#nextBtn',
+    editBtn: '#editBtn',
+    delBtn: '#delBtn'
+};
+
 class Ui {
+    static injectCreateMovieHandler(callback) {
+        $(Id.createMoviePanel).click(callback);
+    }
+
+    static injectUpdateMovieHandler(editMovieDoubleCallback, deleteMovieDoubleCallback) {
+        $('.editBtn')
+            .toArray()
+            .forEach(x => $(x).click(editMovieDoubleCallback($(x).attr("tag"))));
+        $('.delBtn')
+            .toArray()
+            .forEach(x => $(x).click(deleteMovieDoubleCallback($(x).attr("tag"))));
+    }
     static injectSearchHandler(callback) {
-        $('#searchBtn').click(callback);
-        $('#searchInput').keypress((e) => {
+        $(Id.searchBtn).click(callback);
+        $(Id.searchInput).keypress((e) => {
             const keyCodeOfEnter = 13;
             if (e.keyCode == keyCodeOfEnter) {
                 callback();
             }
         });
-        $('#genreSelect').change(callback);
-        $('#yearSelect').change(callback);
+        $(Id.genreSelect).change(callback);
+        $(Id.yearSelect).change(callback);
     }
 
     static injectNavigationHandler(pageCount, doubleCallback) {
@@ -18,11 +44,11 @@ class Ui {
     }
 
     static injectGoToPrevHandler(callback) {
-        $('#prevBtn').click(callback);
+        $(Id.prevBtn).click(callback);
     }
 
     static injectGoToNextHandler(callback) {
-        $('#nextBtn').click(callback);
+        $(Id.nextBtn).click(callback);
     }
 
     static injectGoBackHandler(doubleCallback) {
@@ -35,38 +61,42 @@ class Ui {
     }
 
     static updatePageLinks(pageCount, currentPage) {
-        $('#pageLinks').html(renderPageLinks(pageCount, currentPage));
+        $(Id.pageLinks).html(renderPageLinks(pageCount, currentPage));
     }
 
     static updateMovieList(movies, renderWithAdminOptions = false) {
         const x = new MovieItemRenderer(renderWithAdminOptions);
         movies.forEach(movie => {
-            $('#movieList').append(x.render(movie));
+            $(Id.movieList).append(x.render(movie));
         });
     }
     static clearMovieList() {
-        $('#movieList').html("");
+        $(Id.movieList).html("");
     }
 
     static reportNoMovieFound() {
-        $('#movieList').append("<p>No result found.</p>")
-        $('#movieList').append("<a href='javascript:history.back()'>Click here to go back</a>")
+        $(Id.movieList).append("<p>No result found.</p>")
+        $(Id.movieList).append("<a href='javascript:history.back()'>Click here to go back</a>")
     }
 
     static updateGenreOptions(options) {
         options.forEach(x => {
-            $('#genreSelect').append(`<option value=${x}>${x}</option>`)
+            $(Id.genreSelect).append(`<option value=${x}>${x}</option>`)
         });
     }
 
     static updateYearOptions(options) {
         options.forEach(x => {
-            $('#yearSelect').append(`<option value=${x}>${x}</option>`)
+            $(Id.yearSelect).append(`<option value=${x}>${x}</option>`)
         })
     }
 
     static renderCreateMovieButton() {
-        $('#createMoviePanel').html(`<button class='clickable createBtn'>Add new movie</button>`);
+        $(Id.createMoviePanel).html(`<button class='clickable createBtn'>Add new movie</button>`);
     }
 
+    static markMovieAsDeleted(video_id) {
+        $(`#movieItem${video_id}`).fadeTo('slow', 0.33);
+        $(`#movieItem${video_id}`).append(`<span class='deleted'><b>DELETED</b></span>`);
+    }
 };
