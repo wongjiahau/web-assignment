@@ -22,10 +22,10 @@ function NullValidatorChain(errorMessage) {
 function ValidatorChain(str) {
     this.str = str;
     this.Title = () => {
-        if(!/^[a-zA-Z0-9'"().,\?:\s]+$/.test(this.str)) {
+        if(!/^[a-zA-Z0-9'"().,\?:\-\s]+$/.test(this.str)) {
             return "Cannot contain weird symbols";
         }
-        if(this.str.length >= 100) {
+        if(this.str.length >= 1000) {
             return "Cannot contain more than 100 letters";
         }
         return "";

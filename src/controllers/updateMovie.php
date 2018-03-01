@@ -28,21 +28,18 @@ class UpdateMovie extends Controller
     function run()
     {
         $x = new UploadedFileSaver($_FILES["Image"]);
-        if ($x->uploadSuccess) {
-            $img_path = $x->targetFile;
-            $this->model->run(
-                new Movie(
-                    $_POST['Title'],
-                    $_POST['Year'],
-                    $_POST['Genre'],
-                    $img_path,
-                    $_POST['Synopsis']
-                )
-            );
-            $newState = array('url' => 'retrieveMovie');
-        } else {
-            $newState = array('url' => 'createMovie');
-        }
+        $img_path = isset($x->targetFile) ? $x->targetFile : null;
+        $this->model->run(
+            $_GET['video_id'],
+            new Movie(
+                $_POST['Title'],
+                $_POST['Year'],
+                implode(", ", $_POST['Genre']),
+                $img_path,
+                $_POST['Synopsis']
+            )
+        );
+        $newState = array('url' => 'retrieveMovie');
         StateManager::update($newState);
     }
 
