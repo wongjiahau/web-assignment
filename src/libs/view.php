@@ -16,4 +16,10 @@ class View
             require 'views/' . $name . '.php';
         }
     }
+
+    public function injectGlobalConstants($map) {
+        foreach ($map as $key => $value) {
+            echo "<script lang='js'> const $key = $value; </script>";
+        }
+    }
 }

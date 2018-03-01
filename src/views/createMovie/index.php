@@ -20,7 +20,7 @@ function selectRenderer($label) {
 }
 
 function multiSelectRenderer($label) {
-    return "<select class='formInput' name='$label' id='${label}Input' multiple></select>";
+    return "<select class='formInput' name='${label}[]' id='${label}Input' multiple></select>";
 }
 
 function textareaRenderer($label) {
@@ -28,7 +28,8 @@ function textareaRenderer($label) {
 }
 
 function imageInputRenderer($label) {
-    return "<input type='file' name='$label' id='${label}Input'>";
+    return "<input type='file' name='$label' id='${label}Input'>
+            <img id='selectedImage' src='#'>";
 }
 
 ?>

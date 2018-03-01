@@ -6,6 +6,13 @@
     text-align: left;
 }
 
+#selectedImage {
+    width: 70px;
+    height: 100px;
+    border-radius: 5px;
+    box-shadow: 4px 4px #888888;
+}
+
 #formLabel {
     text-align: right;
     font-size: 14px;

@@ -9,3 +9,5 @@
 [X] Add dialog for deleting video
 [] Beautify create movie page
 [] implement update movie page
+[] Multi select for genre not working when updating video
+[] Title of update movide shouldn't be create new movie

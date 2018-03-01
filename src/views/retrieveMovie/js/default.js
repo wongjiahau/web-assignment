@@ -38,7 +38,7 @@ function renderAdminUi() {
     Ui.injectCreateMovieHandler(() => window.location = 'createMovie');
     Ui.injectUpdateMovieHandler(
         (video_id) => () => {
-            window.location = `updateMovie/index/${video_id}`;
+            window.location = `updateMovie?video_id=${video_id}`;
         }, 
         (video_id) => () => {
             $.get('deleteMovie/xhrRun', {video_id})
