@@ -86,7 +86,7 @@ class Ui {
 
     static updateGenreOptions(options) {
         options.forEach(x => {
-            $(Id.genreSelect).append(`<option value=${x}>${x}</option>`)
+            $(Id.genreSelect).append(`<option value=${x}>${x}</option>`);
         });
     }
 

@@ -20,6 +20,12 @@ function getGenreOptions() {
         response.forEach(x => {
             $('#GenreInput').append(`<option value=${x}>${x}</option>`)
         });
+        // To avoid the need of holding Ctrl when selecting multiple value:
+        $('#GenreInput option').mousedown(function(e) {
+            e.preventDefault();
+            $(this).prop('selected', !$(this).prop('selected'));
+            return false;
+        });
     }, 'json');
 }
 

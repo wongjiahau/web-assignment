@@ -27,7 +27,7 @@ class CreateMovie extends Controller
                 new Movie(
                     $_POST['Title'],
                     $_POST['Year'],
-                    $_POST['Genre'],
+                    implode(", ", $_POST['Genre']),
                     $img_path,
                     $_POST['Synopsis']
                 )
