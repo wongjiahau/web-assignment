@@ -33,7 +33,7 @@ function imageInputRenderer($label) {
         <script src='<?php echo URL; ?>jslibs/validator.js'> </script>
     </head>
     <body>
-        <form id="createMovieForm" action="createMovie/run" method="post" enctype="multipart/form-data">
+        <form id="createMovieForm" method="post" enctype="multipart/form-data">
             <div id="createMovieDiv">
                 <h1>Create new movie</h1>
                 <table cellspacing="0" cellpadding="0">
