@@ -4,6 +4,7 @@ class CreateMovie extends Controller
     function __construct()
     {
         parent::__construct();
+        $this->imgNotAvailableLink = "https://image.ibb.co/mGkDQx/notavail.jpg";
         $this->view->js = array(
             'createMovie/js/default.js',
             'createMovie/js/injectFormAction.js',
@@ -21,21 +22,17 @@ class CreateMovie extends Controller
     function run()
     {
         $x = new UploadedFileSaver($_FILES["Image"]);
-        if ($x->uploadSuccess) {
-            $img_path = $x->targetFile;
-            $this->model->run(
-                new Movie(
-                    $_POST['Title'],
-                    $_POST['Year'],
-                    implode(", ", $_POST['Genre']),
-                    $img_path,
-                    $_POST['Synopsis']
-                )
-            );
-            $newState = array('url' => 'retrieveMovie');
-        } else {
-            $newState = array('url' => 'createMovie'); 
-        }
+        $img_path = isset($x->targetFile) ? $x->targetFile : $this->imgNotAvailableLink;
+        $this->model->run(
+            new Movie(
+                $_POST['Title'],
+                $_POST['Year'],
+                implode(", ", $_POST['Genre']),
+                $img_path,
+                $_POST['Synopsis']
+            )
+        );
+        $newState = array('url' => 'retrieveMovie');
         StateManager::update($newState);
     }
 

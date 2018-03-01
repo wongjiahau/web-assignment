@@ -4,7 +4,7 @@ function v(str) {
 function Validator(str) {
     this.str = str;
     this.isEmpty = () => {
-        return str.length === 0;
+        return str === null || str.length === 0;
     }
     this.isInvalid = this.isEmpty()
         ? new NullValidatorChain("Cannot be empty")

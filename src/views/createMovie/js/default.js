@@ -18,10 +18,8 @@ function injectImageInputHandler() {
         }
     }
 
-    $("#ImageInput")
-        .change(function () {
-            readURL(this);
-        });
+    $("#ImageInput").change(function () { readURL(this); });
+    $("#selectedImage").load(() => $('#labelForImageInput').html("Change file"));
 }
 
 function getYearOptions() {
@@ -54,6 +52,10 @@ function validateForm() {
         return errorMessage.length === 0;
     }
 
-    const isValid = validate("Title") && validate("Year") && validate("Genre") && validate("Synopsis") && validate("Image")
+    const isValid = 
+        validate("Title") && 
+        validate("Year") && 
+        validate("Genre") && 
+        validate("Synopsis");
     return isValid;
 }

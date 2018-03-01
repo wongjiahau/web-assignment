@@ -28,8 +28,12 @@ function textareaRenderer($label) {
 }
 
 function imageInputRenderer($label) {
-    return "<input type='file' name='$label' id='${label}Input'>
-            <img id='selectedImage' src='#'>";
+    //How to style file input? => https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
+    return "
+    <img id='selectedImage' src='#'>
+    <input type='file' name='$label' id='${label}Input'>
+    <label id='labelFor${label}Input' for='${label}Input'>Choose file</label>
+            ";
 }
 
 ?>
