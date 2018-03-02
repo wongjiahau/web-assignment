@@ -6,6 +6,9 @@ class Fof extends Controller
     function __construct($errorMsg = "")
     {
         parent::__construct();
+        $this->view->css = array(
+            'fof/css/default.css',
+        );
         $this->view->render('fof/index');
     }
     
