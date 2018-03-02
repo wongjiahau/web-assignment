@@ -21,15 +21,14 @@
 </head>
 <body>
 <div id="header">
-    <span id="title">AAA Movie Library</span>
-    <br/>
-    <a href="index">Index</a>
-    <a href="help">help</a>
-    <?php if (Session::get('adminLoggedIn')) : ?>
-        <a href="dashboard/logout">Logout</a>
-    <?php else : ?>
-        <a href="login">Login</a>
-    <?php endif; ?>
+    <a class="websiteTitle" href="retrieveMovie"><span class="websiteTitle">AAA Movie Library</span></a>
+    <span class="userPanel">
+        <?php if (Session::get('adminLoggedIn')) : ?>
+            <button class='clickable' onclick='window.location="dashboard/logout"'>Logout</button>
+        <?php else : ?>
+            <button class='clickable' onclick='window.location="login"'>Login</button>
+        <?php endif; ?>
+    </span>
 </div>
 
 <div id="content">

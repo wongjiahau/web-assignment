@@ -1,5 +1,4 @@
 <div id="retriveMoviePage">
-    <br/>
     <button id="backBtn" class="clickable" onclick="history.back();">Back</button> 
     <input id="searchInput" type="text" placeholder="Type here to search . . ."> 
     <select id="genreSelect" class="clickable">
