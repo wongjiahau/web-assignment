@@ -1,3 +1,7 @@
+#pageTitle {
+    font-size: 28px;
+}
+
 #createMovieDiv {
     text-align: center;
 }
@@ -6,14 +10,9 @@
     text-align: left;
 }
 
-#selectedImage {
-    width: 70px;
-    height: 100px;
-    border-radius: 5px;
-    box-shadow: 4px 4px #888888;
-}
 
 #formLabel {
+    display: inline;
     text-align: right;
     font-size: 14px;
     padding-bottom: 2.5px;
@@ -35,15 +34,42 @@ td {
     vertical-align: bottom;
 }
 
-.errorMessage {
-    color: red
+td>* {
+    vertical-align: middle;
 }
+
+.errorMessage {
+    margin-left: 5px;
+    color: red;
+    font-size: 12px;
+}
+
+.openFile {
+    font-size: 12px;
+    background: lightgrey;
+    padding: 5px;
+    display: inline;
+}
+
+.movieImage {
+    margin: 5px;
+    width: 70px;
+    height: 100px;
+    border-radius: 5px;
+    box-shadow: 4px 4px #888888;
+    display: inline;
+}
+
 
 #ImageInput {
     width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+textarea {
+    height: 100px;
 }

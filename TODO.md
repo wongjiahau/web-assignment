@@ -7,8 +7,9 @@
 06-[X] Form validation will proceed even failed
 07-[X] Please fix image size for movie item
 08-[X] Add dialog for deleting video
-09-[] Beautify create movie page
-10-[] implement update movie page
+09-[X] Beautify create movie page
+10-[X] implement update movie page
 11-[] Multi select for genre not working when updating video
 12-[X] Title of update movide shouldn't be create new movie
 13-[x] Fix a failing unit test for php
+14-[] Back is not working for retrieve movie

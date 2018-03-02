@@ -4,7 +4,7 @@ function getLabel($label, $renderer)
 {
     echo "
     <tr>
-        <td id='formLabel'>$label</td> 
+        <td><span id='formLabel'>$label</span></td> 
         <td>" . $renderer($label) . "</td>
         <td><span class='errorMessage' id='${label}Error'></span></td>
     </tr>
@@ -30,9 +30,10 @@ function textareaRenderer($label) {
 function imageInputRenderer($label) {
     //How to style file input? => https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
     return "
-    <img id='selectedImage' src='#'>
+    <img id='selectedImage' class='movieImage' src='https://image.ibb.co/mGkDQx/notavail.jpg'>
+    <br/>
     <input type='file' name='$label' id='${label}Input'>
-    <label id='labelFor${label}Input' for='${label}Input'>Choose file</label>
+    <label id='labelFor${label}Input' for='${label}Input' class='clickable openFile'>Choose file</label>
             ";
 }
 
@@ -55,7 +56,7 @@ function imageInputRenderer($label) {
                     ?>
                 </tbody>
             </table>
-            <input type="submit" value="submit">
+            <input class='primary clickable' type="submit" value="SUBMIT">
         </div>
     </form>
 </body>
