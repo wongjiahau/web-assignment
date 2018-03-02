@@ -15,7 +15,7 @@ require_once(__ROOT__ . '/src/models/createMovieModel.php');
 describe("updateMovieModel", function () {
     beforeEach(function() {
         $db = new Model();
-        $db->queryDb("delete from video where video_id > 384");
+        $db->queryDb("delete from movie where movie_id > 384");
         $x = new CreateMovieModel();
         $x->run(new Movie(
             "original title",
@@ -28,7 +28,7 @@ describe("updateMovieModel", function () {
 
     afterAll(function(){
         $db = new Model();
-        $db->queryDb("delete from video where video_id > 384");
+        $db->queryDb("delete from movie where movie_id > 384");
     });
 
     describe("getMovie", function () {
@@ -43,18 +43,18 @@ describe("updateMovieModel", function () {
     describe("run", function () {
         it("should update img_path if img_path is not null", function () {
             $x = new UpdateMovieModel();
-            $video_id = "385";
-            $x->run($video_id, new Movie(
+            $movie_id = "385";
+            $x->run($movie_id, new Movie(
                 "new title",
                 "9999",
                 "new genre",
                 "new img_path",
                 "new synopsis"
             ));
-            $res = $x->queryDb("select * from video where video_id = $video_id");
+            $res = $x->queryDb("select * from movie where movie_id = $movie_id");
             unset($res[0]['ts']);
             expect($res[0])->toBe(array(
-                "video_id" => $video_id,
+                "movie_id" => $movie_id,
                 "title" => "new title",
                 "year" => "9999",
                 "genre" => "new genre",
@@ -65,18 +65,18 @@ describe("updateMovieModel", function () {
 
         it("should not update img_path if img_path is null", function () {
             $x = new UpdateMovieModel();
-            $video_id = "385";
-            $x->run($video_id, new Movie(
+            $movie_id = "385";
+            $x->run($movie_id, new Movie(
                 "new title",
                 "9999",
                 "new genre",
                 null,
                 "new synopsis"
             ));
-            $res = $x->queryDb("select * from video where video_id = $video_id");
+            $res = $x->queryDb("select * from movie where movie_id = $movie_id");
             unset($res[0]['ts']);
             expect($res[0])->toBe(array(
-                "video_id" => $video_id,
+                "movie_id" => $movie_id,
                 "title" => "new title",
                 "year" => "9999",
                 "genre" => "new genre",

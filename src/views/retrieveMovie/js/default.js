@@ -25,16 +25,16 @@ function constructHandlerInjector(isAdmin) {
                 setSearchParams(params);
             },
         createMovieCallback:        () => window.location = 'createMovie',
-        updateMovieDoubleCallback:  (video_id) => () => {
-                window.location = `updateMovie?video_id=${video_id}`; 
+        updateMovieDoubleCallback:  (movie_id) => () => {
+                window.location = `updateMovie?movie_id=${movie_id}`; 
             },
-        deleteMovieDoubleCallback:  (video_id) => () => {
+        deleteMovieDoubleCallback:  (movie_id) => () => {
                 $
-                    .get('deleteMovie/xhrRun', {video_id})
+                    .get('deleteMovie/xhrRun', {movie_id})
                     .done((response) => {
                         const deleteSuccess = JSON.parse(response);
                         if (deleteSuccess) {
-                            _ui.markMovieAsDeleted(video_id);
+                            _ui.markMovieAsDeleted(movie_id);
                         }
                     });
             }

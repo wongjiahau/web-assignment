@@ -10,8 +10,8 @@ create table admin_data (
 
 insert into admin_data values("admin", "$2y$10$gmvUlKSALDqtvnoAhDrpn.F/XvTS.6pQPO37vfWl3EukVNc7yfGVG");
 
-create table video (
-    video_id int not null auto_increment primary key,
+create table movie (
+    movie_id int not null auto_increment primary key,
     title varchar(100) not null,
     year int not null,
     genre varchar(100) not null,

@@ -8,6 +8,6 @@ class DeleteMovie extends Controller
 
     function xhrRun()
     {
-        echo $this->model->run($_GET['video_id']);
+        echo $this->model->run($_GET['movie_id']);
     }
 }

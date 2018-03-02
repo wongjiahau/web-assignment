@@ -1,7 +1,7 @@
 $(() => {
-    // Note: CURRENT_VIDEO_ID is injected as constant in updateMovie.php
-    console.log(CURRENT_VIDEO_ID);
-    $.get(`updateMovie/xhrGetMovie/${CURRENT_VIDEO_ID}`, (response) => {
+    // Note: CURRENT_movie_id is injected as constant in updateMovie.php
+    console.log(CURRENT_movie_id);
+    $.get(`updateMovie/xhrGetMovie/${CURRENT_movie_id}`, (response) => {
         const x = JSON.parse(response);
         $('#TitleInput').val(x.title);
         $('#GenreInput').val(x.genre.split(",").map(x => x.trim()));

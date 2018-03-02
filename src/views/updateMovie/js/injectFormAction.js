@@ -1,3 +1,3 @@
 $(() => {
-    $('#createMovieForm').attr('action', `updateMovie/run?video_id=${CURRENT_VIDEO_ID}`);
+    $('#createMovieForm').attr('action', `updateMovie/run?movie_id=${CURRENT_movie_id}`);
 });

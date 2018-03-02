@@ -7,11 +7,11 @@ class CreateMovieModel extends Model
     }
 
     public function run($movie) {
-        $maxIndex = (int)$this->queryDb("select max(video_id) as x from video")[0]["x"];
+        $maxIndex = (int)$this->queryDb("select max(movie_id) as x from movie")[0]["x"];
         $maxIndex++;
         $sth = $this->db->prepare("
-            insert into video(video_id, title, year, genre, img_path, synopsis) values(
-                :video_id,
+            insert into movie(movie_id, title, year, genre, img_path, synopsis) values(
+                :movie_id,
                 :title,
                 :year,
                 :genre,
@@ -21,7 +21,7 @@ class CreateMovieModel extends Model
         ");
 
         $sth->execute(array(
-            ':video_id' => $maxIndex,
+            ':movie_id' => $maxIndex,
             ':title'    => $movie->title,
             ':year'     => $movie->year,
             ':genre'    => $movie->genre,

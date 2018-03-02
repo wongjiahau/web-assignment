@@ -56,8 +56,8 @@ class Ui {
         $(Id.createMoviePanel).html(`<button class='clickable createBtn'>Add new movie</button>`);
     }
 
-    markMovieAsDeleted(video_id) {
-        $(`#movieItem${video_id}`).fadeTo('slow', 0.33);
-        $(`#movieItem${video_id}`).append(`<span class='deleted'><b>DELETED</b></span>`);
+    markMovieAsDeleted(movie_id) {
+        $(`#movieItem${movie_id}`).fadeTo('slow', 0.33);
+        $(`#movieItem${movie_id}`).append(`<span class='deleted'><b>DELETED</b></span>`);
     }
 };

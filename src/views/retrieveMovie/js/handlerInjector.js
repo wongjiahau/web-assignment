@@ -77,12 +77,12 @@ class HandlerInjector {
         $('.delBtn')
             .toArray()
             .forEach(x => $(x).click(() => {
-                const video_id = $(x).attr("tag");
-                if (window.confirm(`Are you sure you want to delete "${$(`#movieTitle${video_id}`).html()}"?
+                const movie_id = $(x).attr("tag");
+                if (window.confirm(`Are you sure you want to delete "${$(`#movieTitle${movie_id}`).html()}"?
                                     \nWARNING: This action cannot be undone.`)) {
                     this
                         .handlers
-                        .deleteMovieDoubleCallback(video_id)();
+                        .deleteMovieDoubleCallback(movie_id)();
                 }
             }));
     }

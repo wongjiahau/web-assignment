@@ -9,12 +9,12 @@ describe("deleteMovieModel", function () {
     describe("run", function () {
         it("positive case", function () {
             $x = new DeleteMovieModel();
-            $x->queryDb("insert into video(video_id, title) values (385, 'for_deleting')");
-            $res = $x->queryDb("select count(*) as x from video");
+            $x->queryDb("insert into movie(movie_id, title) values (385, 'for_deleting')");
+            $res = $x->queryDb("select count(*) as x from movie");
             expect($res[0]["x"])->toBe("385");
             $success = $x->run("385");
             expect($success)->toBe(true);
-            $res = $x->queryDb("select count(*) as x from video");
+            $res = $x->queryDb("select count(*) as x from movie");
             expect($res[0]["x"])->toBe("384");
         });
 

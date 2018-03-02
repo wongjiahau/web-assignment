@@ -27,7 +27,7 @@ class RetrieveMovieModel extends Model
     public function xhrGetMovie($searchWord, $selectedGenre = "", $selectedYear = "", $pageNumber = 0)
     {
         $subquery = $this->getSubQuery($searchWord, $selectedGenre, $selectedYear);
-        $query = "select * from video " . $subquery;
+        $query = "select * from movie " . $subquery;
         $query .= $this->getLimitQuery($pageNumber, "year");
         return json_encode($this->queryDb($query));
     }
@@ -36,7 +36,7 @@ class RetrieveMovieModel extends Model
     {
         $subquery = $this->getSubQuery("", "", "");
         $query = 
-            "select * from video " . $subquery .
+            "select * from movie " . $subquery .
             $this->getLimitQuery(0, "ts");
         return json_encode($this->queryDb($query));
     }
@@ -45,7 +45,7 @@ class RetrieveMovieModel extends Model
     public function xhrGetPageCount($searchWord, $selectedGenre = "", $selectedYear = "")
     {
         $subquery = $this->getSubQuery($searchWord, $selectedGenre, $selectedYear);
-        $query = "select count(*) as count from video " . $subquery;
+        $query = "select count(*) as count from movie " . $subquery;
         $result = $this->queryDb($query);
         $count = ceil((int)($result[0]['count']) / $this->PAGE_LIMIT);
         return json_encode($count);
@@ -53,7 +53,7 @@ class RetrieveMovieModel extends Model
 
     public function xhrGetGenre()
     {
-        $query = 'select distinct genre from video;';
+        $query = 'select distinct genre from movie;';
         $result = $this->queryDb($query);
         $genres = array();
         foreach ($result as $x) {
@@ -66,7 +66,7 @@ class RetrieveMovieModel extends Model
 
     public function xhrGetYear()
     {
-        $query = 'select distinct year from video order by year;';
+        $query = 'select distinct year from movie order by year;';
         $result = $this->queryDb($query);
         $years = array();
         foreach ($result as $x) {

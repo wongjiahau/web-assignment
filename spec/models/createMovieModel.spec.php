@@ -18,17 +18,17 @@ describe("createMovieModel", function () {
                     "This is a sample"
                 )
             );
-            $data = $x->queryDb("select * from video where title='Sample movie'")[0];
+            $data = $x->queryDb("select * from movie where title='Sample movie'")[0];
             unset($data["ts"]); // unset timestamp property
             expect($data)->toBe(array(
-                "video_id" => "385",
+                "movie_id" => "385",
                 "title"    => "Sample movie",
                 "year"     => "2012",
                 "genre"    => "Comedy",
                 "img_path" => "google.com",
                 "synopsis" => "This is a sample"
             ));
-            $x->queryDb("delete from video where title='Sample movie'");
+            $x->queryDb("delete from movie where title='Sample movie'");
         });
     });
 });

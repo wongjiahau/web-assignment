@@ -18,12 +18,12 @@ class UpdateMovie extends Controller
     function index()
     {
         $this->view->render('createMovie/index');
-        $this->view->injectGlobalConstants(array('CURRENT_VIDEO_ID' => $_GET['video_id']));
+        $this->view->injectGlobalConstants(array('CURRENT_movie_id' => $_GET['movie_id']));
     }
 
-    function xhrGetMovie($video_id)
+    function xhrGetMovie($movie_id)
     {
-        echo $this->model->xhrGetMovie($video_id);
+        echo $this->model->xhrGetMovie($movie_id);
     }
 
     function run()
@@ -31,7 +31,7 @@ class UpdateMovie extends Controller
         $x = new UploadedFileSaver($_FILES["Image"]);
         $img_path = isset($x->targetFile) ? $x->targetFile : null;
         $this->model->run(
-            $_GET['video_id'],
+            $_GET['movie_id'],
             new Movie(
                 $_POST['Title'],
                 $_POST['Year'],

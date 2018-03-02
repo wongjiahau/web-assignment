@@ -48,11 +48,11 @@ function imageInputRenderer($label) {
             <table cellspacing="0" cellpadding="0">
                 <tbody>
                     <?php
+                    getLabel("Image", "imageInputRenderer");
                     getLabel("Title", "textInputRenderer");
                     getLabel("Genre", "multiSelectRenderer");
                     getLabel("Year", "selectRenderer");
                     getLabel("Synopsis", "textareaRenderer");
-                    getLabel("Image", "imageInputRenderer");
                     ?>
                 </tbody>
             </table>

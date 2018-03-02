@@ -30,7 +30,7 @@ describe("retrieveMovieModel", function () {
     beforeAll(function () {
         //Clean up database
         $db = new Model();
-        $db->queryDb("delete from video where video_id > 384");
+        $db->queryDb("delete from movie where movie_id > 384");
     });
 
     describe("xhrGetMovie", function () {
@@ -115,7 +115,7 @@ describe("retrieveMovieModel", function () {
             $x = new RetrieveMovieModel();
             $res = json_decode($x->xhrGetNewMovie());
             expect($res[0]->title)->toBe("Newly inserted");
-            $x->queryDb("delete from video where title = 'Newly inserted'");
+            $x->queryDb("delete from movie where title = 'Newly inserted'");
         });
     });
 });
