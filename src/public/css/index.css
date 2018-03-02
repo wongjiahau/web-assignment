@@ -1,5 +1,7 @@
 html {
     overflow-y: scroll;
+    min-height: 100%;
+    position: relative;
 }
 
 body {
@@ -62,11 +64,19 @@ input:focus {
     color: white;
 }
 
+#content {
+    margin-bottom: 20px;
+    padding-bottom: 20px; /*heigt of footer*/
+}
+
 #footer {
+    width: 100%;
     font-size: 12px;
-    text-align: right;
-    padding-right: 10px;
+    text-align: left;
     padding-bottom: 10px;
+    position: absolute;
+    height: 20px;
+    bottom: 5px;
 }
 
 #title {
