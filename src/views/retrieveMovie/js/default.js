@@ -1,82 +1,81 @@
 var _currentPage = 0;
-var _isAdminSession = false;
+var _ui;
+var _handlerInjector;
 $(() => {
     $.get('retrieveMovie/xhrGetIsAdminSession', (response) => {
-        _isAdminSession = JSON.parse(response);
-        requestInitialMovies();
+        const isAdminSession = JSON.parse(response);
+        _ui = new Ui(isAdminSession);
+        _handlerInjector = constructHandlerInjector(isAdminSession);
+        _handlerInjector.init();
         requestGenres();
         requestYears();
+        requestInitialMovies();
+        requestPageCount(getSearchParams(0));
     })
 });
 
+function constructHandlerInjector(isAdmin) {
+    return new HandlerInjector(isAdmin, {
+        searchMovieCallback:        ()  => requestMovies(getSearchParams(0)),
+        navigateDoubleCallback:     (i) => () => requestMovies(getSearchParams(i)),
+        goToNextCallback:           ()  => requestMovies(getSearchParams(_currentPage + 1)),
+        goToPrevCallback:           ()  => requestMovies(getSearchParams(_currentPage - 1)),
+        goBackdoubleCallback:       (params) => () => {
+                requestMovies(params, false);
+                setSearchParams(params);
+            },
+        createMovieCallback:        () => window.location = 'createMovie',
+        updateMovieDoubleCallback:  (video_id) => () => {
+                window.location = `updateMovie?video_id=${video_id}`; 
+            },
+        deleteMovieDoubleCallback:  (video_id) => () => {
+                $
+                    .get('deleteMovie/xhrRun', {video_id})
+                    .done((response) => {
+                        const deleteSuccess = JSON.parse(response);
+                        if (deleteSuccess) {
+                            _ui.markMovieAsDeleted(video_id);
+                        }
+                    });
+            }
+    });
+}
 
 function requestGenres() {
     $.get('retrieveMovie/xhrGetGenre', (response) => {
-        Ui.updateGenreOptions(response);
+        _ui.updateGenreOptions(response);
+        _handlerInjector.injectGenreOnChangeHandler();
     }, 'json');
 }
 
 function requestYears() {
     $.get('retrieveMovie/xhrGetYear', (response) => {
-        Ui.updateYearOptions(response);
+        _ui.updateYearOptions(response);
+        _handlerInjector.injectYearOnChangeHandler();
     }, 'json');
 }
 
-function injectEventHandlers() {
-    Ui.injectSearchHandler(() => requestMovies(getSearchParams(0)));
-    Ui.injectGoBackHandler((params) => () => {
-        requestMovies(params, false);
-        setSearchParams(params);
-    });
-    if (_isAdminSession) {
-        renderAdminUi();
-    }
-}
-
-function renderAdminUi() {
-    Ui.renderCreateMovieButton();
-    Ui.injectCreateMovieHandler(() => window.location = 'createMovie');
-    Ui.injectUpdateMovieHandler(
-        (video_id) => () => {
-            window.location = `updateMovie?video_id=${video_id}`;
-        }, 
-        (video_id) => () => {
-            $.get('deleteMovie/xhrRun', {video_id})
-            .done((response) => {
-                const deleteSuccess = JSON.parse(response);
-                if(deleteSuccess) {
-                    Ui.markMovieAsDeleted(video_id);
-                }
-            });
-    });
-}
-
 function requestInitialMovies() {
-    $
-        .get('retrieveMovie/xhrGetNewMovie', {})
+    $.get('retrieveMovie/xhrGetNewMovie', {})
         .done((response) => {
             const movies = JSON.parse(response);
-            Ui.updateMovieList(movies, _isAdminSession);
-            requestPageCount(getSearchParams(0));
-            injectEventHandlers();
+            _ui.updateMovieList(movies);
+            _handlerInjector.injectMovieItemEventHandlers();
         });
 }
 
 function requestMovies(searchParams, updateHistory = true) {
     const onSuccess = (response) => {
         const movies = JSON.parse(response);
-        Ui.clearMovieList();
         if (movies.length == 0) {
-            Ui.reportNoMovieFound();
+            _ui.reportNoMovieFound();
         } else {
-            Ui.updateMovieList(movies, _isAdminSession);
+            _ui.updateMovieList(movies);
+            _handlerInjector.injectMovieItemEventHandlers();
             requestPageCount(searchParams);
-            injectEventHandlers();
         }
     }
-    $
-        .get('retrieveMovie/xhrGetMovie', searchParams)
-        .done(onSuccess);
+    $.get('retrieveMovie/xhrGetMovie', searchParams).done(onSuccess);
     _currentPage = searchParams.pageNumber;
     if (updateHistory) {
         history.pushState(searchParams, null, null);
@@ -86,14 +85,10 @@ function requestMovies(searchParams, updateHistory = true) {
 function requestPageCount(searchParams) {
     const onSuccess = (response) => {
         const pageCount = response;
-        Ui.updatePageLinks(pageCount, _currentPage);
-        Ui.injectNavigationHandler(pageCount, (i) => () => requestMovies(getSearchParams(i)));
-        Ui.injectGoToPrevHandler(() => requestMovies(getSearchParams(_currentPage - 1)));
-        Ui.injectGoToNextHandler(() => requestMovies(getSearchParams(_currentPage + 1)));
+        _ui.updatePageLinks(pageCount, _currentPage);
+        _handlerInjector.injectNavigationHandler(pageCount);
     }
-    $
-        .get('retrieveMovie/xhrGetPageCount', searchParams)
-        .done(onSuccess);
+    $.get('retrieveMovie/xhrGetPageCount', searchParams).done(onSuccess);
 
 }
 

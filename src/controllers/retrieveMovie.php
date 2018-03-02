@@ -8,7 +8,8 @@ class RetrieveMovie extends Controller
             'retrieveMovie/js/default.js',
             'retrieveMovie/js/movieItemRenderer.js',
             'retrieveMovie/js/renderPageLinks.js',
-            'retrieveMovie/js/ui.js'
+            'retrieveMovie/js/ui.js',
+            'retrieveMovie/js/handlerInjector.js',
         );
         $this->view->css = array(
             'retrieveMovie/css/admin.css',
