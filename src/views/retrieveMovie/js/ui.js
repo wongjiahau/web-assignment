@@ -25,11 +25,13 @@ class Ui {
             .toArray()
             .forEach(x => $(x).click(() => {
                 const video_id = $(x).attr("tag");
-                if(window.confirm(`Are you sure you want to delete ${$(`#movieTitle${video_id}`).html()}?`)) {
+                if(window.confirm(`Are you sure you want to delete "${$(`#movieTitle${video_id}`).html()}"?
+                                    \nWARNING: This action cannot be undone.`)) {
                     deleteMovieDoubleCallback(video_id)();
                 }
             }));
     }
+
     static injectSearchHandler(callback) {
         $(Id.searchBtn).click(callback);
         $(Id.searchInput).keypress((e) => {

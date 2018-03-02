@@ -3,6 +3,7 @@
 use function Kahlan\describe;
 use function Kahlan\expect;
 use function Kahlan\it;
+use function Kahlan\beforeAll;
 
 function has_duplicate($array)
 {
@@ -21,13 +22,17 @@ function is_sorted($array)
     }
 }
 
-//Clean up database
-$db = new Model();
-$db->queryDb("delete from video where video_id > 384");
 
 require_once(__ROOT__ . '/src/models/retrieveMovieModel.php');
 require_once(__ROOT__ . '/src/models/createMovieModel.php');
+
 describe("retrieveMovieModel", function () {
+    beforeAll(function () {
+        //Clean up database
+        $db = new Model();
+        $db->queryDb("delete from video where video_id > 384");
+    });
+
     describe("xhrGetMovie", function () {
         it("case 1", function () {
             $x = new RetrieveMovieModel();

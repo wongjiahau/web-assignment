@@ -3,15 +3,36 @@
 use function Kahlan\describe;
 use function Kahlan\expect;
 use function Kahlan\it;
+use function Kahlan\beforeAll;
+use function Kahlan\beforeEach;
+use function Kahlan\afterEach;
+use function Kahlan\afterAll;
 
-//Clean up database
-$db = new Model();
-$db->queryDb("delete from video where video_id > 384");
 
 require_once(__ROOT__ . '/src/models/updateMovieModel.php');
+require_once(__ROOT__ . '/src/models/createMovieModel.php');
+
 describe("updateMovieModel", function () {
+    beforeEach(function() {
+        $db = new Model();
+        $db->queryDb("delete from video where video_id > 384");
+        $x = new CreateMovieModel();
+        $x->run(new Movie(
+            "original title",
+            "original year",
+            "original genre",
+            "original img_path",
+            "original synopsis"
+        ));
+    });
+
+    afterAll(function(){
+        $db = new Model();
+        $db->queryDb("delete from video where video_id > 384");
+    });
+
     describe("getMovie", function () {
-        it("case 1", function(){
+        it("case 1", function () {
             $x = new UpdateMovieModel();
             $res = $x->xhrGetMovie('1');
             $res = json_decode($res);
@@ -19,47 +40,48 @@ describe("updateMovieModel", function () {
         });
     });
 
-    describe("run", function() {
-        it("should update img_path if img_path is not null", function() {
+    describe("run", function () {
+        it("should update img_path if img_path is not null", function () {
             $x = new UpdateMovieModel();
-            $x->run("98", new Movie(
+            $video_id = "385";
+            $x->run($video_id, new Movie(
                 "new title",
                 "9999",
                 "new genre",
                 "new img_path",
                 "new synopsis"
             ));
-            $res = $x->queryDb("select * from video where video_id = 98");
+            $res = $x->queryDb("select * from video where video_id = $video_id");
             unset($res[0]['ts']);
             expect($res[0])->toBe(array(
-               "video_id" => "98",
-               "title" => "new title",
-               "year" => "9999",
-               "genre" => "new genre",
-               "img_path" => "new img_path",
-               "synopsis" => "new synopsis"
+                "video_id" => $video_id,
+                "title" => "new title",
+                "year" => "9999",
+                "genre" => "new genre",
+                "img_path" => "new img_path",
+                "synopsis" => "new synopsis"
             ));
         });
 
-        it("should not update img_path if img_path is null", function() {
-            $ORIGINAL_IMG_PATH = "https://images-na.ssl-images-amazon.com/images/M/MV5BNzBiYWVjMjgtMTUzYy00YTFlLWE2OWYtMzY3ZmNmYTE0ODg5XkEyXkFqcGdeQXVyNjMxNzcwOTI@._V1_UX67_CR0,0,67,98_AL_.jpg";
+        it("should not update img_path if img_path is null", function () {
             $x = new UpdateMovieModel();
-            $x->run("99", new Movie(
+            $video_id = "385";
+            $x->run($video_id, new Movie(
                 "new title",
                 "9999",
                 "new genre",
-                null,                
+                null,
                 "new synopsis"
             ));
-            $res = $x->queryDb("select * from video where video_id = 99");
+            $res = $x->queryDb("select * from video where video_id = $video_id");
             unset($res[0]['ts']);
             expect($res[0])->toBe(array(
-               "video_id" => "99",
-               "title" => "new title",
-               "year" => "9999",
-               "genre" => "new genre",
-               "img_path" => $ORIGINAL_IMG_PATH,
-               "synopsis" => "new synopsis"
+                "video_id" => $video_id,
+                "title" => "new title",
+                "year" => "9999",
+                "genre" => "new genre",
+                "img_path" => "original img_path",
+                "synopsis" => "new synopsis"
             ));
 
         });
