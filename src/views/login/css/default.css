@@ -1,0 +1,19 @@
+.outerDiv {
+    width: 100%;
+    height: 400px;
+    text-align: center;
+    display: inline-flex;
+}
+
+.innerDiv {
+    text-align: center;
+    margin: auto;
+}
+
+.submit {
+    width: 166px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}

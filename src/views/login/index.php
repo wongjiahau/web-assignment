@@ -1,7 +1,10 @@
-<h1>Login</h1>
-<form action="login/run" method="post">
-    <label>Login</label><input type="text" name="id"/> <br>
-    <label>Password</label><input type="password" name="password"/> <br>
-    <input type="submit" value="submit">
-
-</form>
+<div class='outerDiv'>
+    <div class='innerDiv'>
+        <h3>Login to AAA Movie Library</h3>
+        <form class="loginForm" action="login/run" method="post">
+            <input type="text" name="id" placeholder="User ID"/> <br>
+            <input type="password" name="password" placeholder="Password"/> <br>
+            <input class='primary clickable submit' type="submit" value="LOGIN">
+        </form>
+    </div>
+</div>
