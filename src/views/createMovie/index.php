@@ -43,7 +43,7 @@ function imageInputRenderer($label) {
 <body>
     <form id="createMovieForm" method="post" enctype="multipart/form-data">
         <div id="createMovieDiv">
-            <h1>Create new movie</h1>
+            <h1 id='pageTitle'></h1>
             <table cellspacing="0" cellpadding="0">
                 <tbody>
                     <?php

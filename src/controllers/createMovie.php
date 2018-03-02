@@ -8,6 +8,7 @@ class CreateMovie extends Controller
         $this->view->js = array(
             'createMovie/js/default.js',
             'createMovie/js/injectFormAction.js',
+            'createMovie/js/injectTitle.js'
         );
         $this->view->css = array(
             'createMovie/css/default.css'

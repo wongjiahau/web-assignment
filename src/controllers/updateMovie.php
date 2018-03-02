@@ -8,6 +8,7 @@ class UpdateMovie extends Controller
             'createMovie/js/default.js',
             'updateMovie/js/retrieveData.js',
             'updateMovie/js/injectFormAction.js',
+            'updateMovie/js/injectTitle.js'
         );
         $this->view->css = array(
             'createMovie/css/default.css'
