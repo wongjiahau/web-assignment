@@ -56,6 +56,8 @@ function imageInputRenderer($label) {
                     ?>
                 </tbody>
             </table>
+            <br/>
+            <button class='clickable' onclick="history.back();">Cancel </button>
             <input class='primary clickable' type="submit" value="SUBMIT">
         </div>
     </form>
