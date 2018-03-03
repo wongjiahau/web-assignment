@@ -36,7 +36,9 @@ function getGenreOptions() {
         response.forEach(x => {
             $('#GenreInput').append(`<option value=${x}>${x}</option>`)
         });
+
         // To avoid the need of holding Ctrl when selecting multiple value:
+        // Refer https://stackoverflow.com/questions/8641729/how-to-avoid-the-need-for-ctrl-click-in-a-multi-select-box-using-javascript
         $('#GenreInput option').mousedown(function (e) {
             e.preventDefault();
             $(this).prop('selected', !$(this).prop('selected'));
