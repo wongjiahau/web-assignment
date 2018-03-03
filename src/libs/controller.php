@@ -16,4 +16,10 @@ class Controller
             $this->model = new $modelName;
         }
     }
+
+    public function accessForbidden()
+    {
+        header("location: " . URL . "errorPage/_403");
+        die();
+    }
 }

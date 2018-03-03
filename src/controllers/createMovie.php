@@ -17,6 +17,10 @@ class CreateMovie extends Controller
 
     function index()
     {
+        Session::start();
+        if (!isset($_SESSION["adminLoggedIn"])) {
+            $this->accessForbidden();
+        }
         $this->view->render('createMovie/index');
     }
 

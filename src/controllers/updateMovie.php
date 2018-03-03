@@ -17,6 +17,10 @@ class UpdateMovie extends Controller
 
     function index()
     {
+        Session::start();
+        if (!isset($_SESSION["adminLoggedIn"])) {
+            $this->accessForbidden();
+        }
         $this->view->render('createMovie/index');
         $this->view->injectGlobalConstants(array('CURRENT_movie_id' => $_GET['movie_id']));
     }

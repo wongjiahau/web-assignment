@@ -14,6 +14,6 @@
 13-[x] Fix a failing unit test for php
 14-[x] Back is not working for retrieve movie
 15-[] Use cookies! (Actually not required anymore)
-16-[] Normal user should not be able to delete movie by using url injection
+16-[X] Normal user should not be able to create/update/delete movie by using url injection
 17-[X] Footer should stay at bottom of page
 18-[] Ui test with selenium

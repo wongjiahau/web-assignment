@@ -17,5 +17,9 @@ class ErrorPage extends Controller
     function _404 () {
         $this->view->render('errorPage/404');
     }
+
+    function _403 () {
+        $this->view->render('errorPage/403');
+    }
     
 }
