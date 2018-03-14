@@ -3,11 +3,11 @@
 function getLabel($label, $renderer)
 {
     echo "
-    <tr>
-        <td><span id='formLabel'>$label</span></td> 
-        <td>" . $renderer($label) . "</td>
-        <td><span class='errorMessage' id='${label}Error'></span></td>
-    </tr>
+    <div class='formInputDiv'>
+        <span class='formLabel'>$label</span><br/>
+        " . $renderer($label) . "<br/>
+        <span class='errorMessage' id='${label}Error'></span><br/>
+    </div>
     ";
 }
 
@@ -30,10 +30,10 @@ function textareaRenderer($label) {
 function imageInputRenderer($label) {
     //How to style file input? => https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
     return "
-    <img id='selectedImage' class='movieImage' src='https://image.ibb.co/mGkDQx/notavail.jpg'>
-    <br/>
+    <label id='labelFor${label}Input' for='${label}Input'>
+        <img id='selectedImage' class='movieImage' src='https://image.ibb.co/mGkDQx/notavail.jpg'>
+    </label>
     <input type='file' name='$label' id='${label}Input'>
-    <label id='labelFor${label}Input' for='${label}Input' class='clickable openFile'>Choose file</label>
             ";
 }
 
@@ -45,18 +45,21 @@ function imageInputRenderer($label) {
     <form id="createMovieForm" method="post" enctype="multipart/form-data">
         <div id="createMovieDiv">
             <h1 id='pageTitle'></h1>
-            <table cellspacing="0" cellpadding="0">
-                <tbody>
-                    <?php
-                    getLabel("Image", "imageInputRenderer");
-                    getLabel("Title", "textInputRenderer");
-                    getLabel("Genre", "multiSelectRenderer");
-                    getLabel("Year", "selectRenderer");
-                    getLabel("Synopsis", "textareaRenderer");
-                    ?>
-                </tbody>
-            </table>
-            <br/>
+                <div id="centerPane">
+                    <div id="leftPane">
+                        <?php getLabel("Image", "imageInputRenderer"); ?>
+                    </div>
+                    <div id="rightPane">
+                        <?php
+                        getLabel("Title", "textInputRenderer");
+                        getLabel("Genre", "multiSelectRenderer");
+                        getLabel("Year", "selectRenderer");
+                        getLabel("Synopsis", "textareaRenderer");
+                        ?>
+                    </div>
+                </div>
+        </div>
+        <div id="bottomPane">
             <button class='clickable' onclick="history.back();">Cancel </button>
             <input class='primary clickable' type="submit" value="SUBMIT">
         </div>

@@ -19,7 +19,7 @@ function injectImageInputHandler() {
     }
 
     $("#ImageInput").change(function () { readURL(this); });
-    $("#selectedImage").load(() => $('#labelForImageInput').html("Change file"));
+    // $("#selectedImage").load(() => $('#labelForImageInput').html("Change file"));
 }
 
 function getYearOptions() {
