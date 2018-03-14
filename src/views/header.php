@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Test</title>
+    <title>AAA Movie Library</title>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/index.css">
     <script src="<?php echo URL; ?>public/js/jquery.js"></script>
