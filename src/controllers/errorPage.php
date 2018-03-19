@@ -9,17 +9,24 @@ class ErrorPage extends Controller
         );
     }
 
-    function index() 
+    function index()
     {
         $this->_404();
     }
 
-    function _404 () {
+    function _404()
+    {
         $this->view->render('errorPage/404');
     }
 
-    function _403 () {
+    function _403()
+    {
         $this->view->render('errorPage/403');
     }
-    
+
+    function _401()
+    {
+        $this->view->render('errorPage/401');
+    }
+
 }

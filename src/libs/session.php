@@ -23,7 +23,7 @@ class Session
         }
     }
 
-    private static function unset($key) 
+    private static function unset($key)
     {
         Session::start();
         unset($_SESSION[$key]);
@@ -34,15 +34,28 @@ class Session
         session_destroy();
     }
 
-    public static function getAdmin() {
+    public static function getAdmin()
+    {
         return Session::get('admin');
     }
 
-    public static function setAdmin($value) {
+    public static function setAdmin($value)
+    {
         Session::set('admin', $value);
     }
 
-    public static function endAdminSession() {
+    public static function endAdminSession()
+    {
         Session::unset('admin');
+    }
+
+    public static function resetAdminLastActivity()
+    {
+        Session::set('adminLastActivity', time());
+    }
+
+    public static function getAdminLastActivity()
+    {
+        return Session::get('adminLastActivity');
     }
 }

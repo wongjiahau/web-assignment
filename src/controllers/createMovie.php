@@ -17,7 +17,7 @@ class CreateMovie extends AdminController
 
     function index()
     {
-        parent::checkIfUserIsAuthorized();
+        parent::index();
         $this->view->render('createMovie/index');
     }
 

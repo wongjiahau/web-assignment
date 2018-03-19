@@ -20,9 +20,4 @@ class Controller
         }
     }
 
-    public function accessForbidden()
-    {
-        header("location: " . URL . "errorPage/_403");
-        die();
-    }
 }

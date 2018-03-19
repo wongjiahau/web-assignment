@@ -8,7 +8,7 @@ class DeleteMovie extends AdminController
 
     function xhrRun()
     {
-        parent::checkIfUserIsAuthorized();
+        parent::index();
         echo $this->model->run($_GET['movie_id']);
     }
 }

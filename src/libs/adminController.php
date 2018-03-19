@@ -6,25 +6,34 @@ class AdminController extends Controller
         parent::__construct();
     }
 
-    function checkIfUserIsAuthorized()
+    private function checkIfUserIsAuthorized()
     {
         if (!Session::getAdmin()) {
-            $this->accessForbidden();
+            Navigator::goto('errorPage/_403');
+            die();
         }
+        $this->checkIfAdminSessionExipred();
     }
 
-    // function checkIfAdminSessionExipred() {
-    //     Session::start();
-    //     if (isset($_SESSION["adminLoggedIn"])) {
-    //         $MAX_LIMIT = 15 * 60; // 15 minutes
-    //         if (isset($_SESSION['LAST_ACTIVITY'])) {
-    //             if (time() - $_SESSION['LAST_ACTIVITY'] > $MAX_LIMIT) {
-    //                 Session::destroy();
-    //             }
-    //         } else {
-    //             $_SESSION['LAST_ACTIVITY'] = time();
-    //         }
-    //         echo $_SESSION["LAST_ACTIVITY"];
-    //     }
-    // }
+    private function checkIfAdminSessionExipred()
+    {
+        if (empty(Session::getAdminLastActivity())) {
+            Session::resetAdminLastActivity();
+            return;
+        }
+        $MAX_LIMIT_IN_SECONDS = 60;
+        if ((time() - Session::getAdminLastActivity()) > $MAX_LIMIT_IN_SECONDS) {
+            Session::endAdminSession();
+            Navigator::goto('errorPage/_401');
+            die;
+        }
+        Session::resetAdminLastActivity();
+    }
+
+    protected function index()
+    {
+        $this->checkIfUserIsAuthorized();
+        $this->checkIfAdminSessionExipred();
+    }
+
 }

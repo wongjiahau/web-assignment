@@ -24,6 +24,7 @@ class StateManager
                         switch ($sessionName) {
                             case "admin":
                                 Session::setAdmin($sessionValue);
+                                Session::resetAdminLastActivity();
                                 break;
                             default:
                                 throw new Exception("Unknown session name : " . $sessionName);

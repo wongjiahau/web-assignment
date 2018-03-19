@@ -17,7 +17,7 @@
 16-[X] Normal user should not be able to create/update/delete movie by using url injection
 17-[X] Footer should stay at bottom of page
 18-[] Ui test with selenium
-19-[] Admin session should expire in 15 minutes of inactivity
+19-[X] Admin session should expire in 1 minutes of inactivity
 20-[] Genre is not selected with previous value when updating some movie
 21-[] Bug, pressing enter will cause form to submit
 22-[] Bug, back not working again after search

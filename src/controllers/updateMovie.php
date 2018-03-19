@@ -17,7 +17,7 @@ class UpdateMovie extends AdminController
 
     function index()
     {
-        parent::checkIfUserIsAuthorized();
+        parent::index();
         $this->view->render('createMovie/index');
         $this->view->injectGlobalConstants(array('CURRENT_movie_id' => $_GET['movie_id']));
     }
