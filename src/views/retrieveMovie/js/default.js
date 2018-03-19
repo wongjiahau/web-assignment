@@ -61,6 +61,7 @@ function requestInitialMovies() {
             const movies = JSON.parse(response);
             _ui.updateMovieList(movies);
             _handlerInjector.injectMovieItemEventHandlers();
+            history.pushState(getSearchParams(0), null, null);
         });
 }
 

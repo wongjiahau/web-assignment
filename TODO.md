@@ -2,7 +2,7 @@
 01-[x] Make paging for retrieve_movie
 02-[x] Remove link from movie synopsis
 03-[X] Add back button for retrieving movie
-04-[] Prevent admin from adding the same video
+04-[] Prevent admin from adding the same movie
 05-[X] After create new movie go where ??
 06-[X] Form validation will proceed even failed
 07-[X] Please fix image size for movie item
@@ -20,5 +20,5 @@
 19-[X] Admin session should expire in 1 minutes of inactivity
 20-[] Genre is not selected with previous value when updating some movie
 21-[] Bug, pressing enter will cause form to submit
-22-[] Bug, back not working again after search
+22-[X] Bug, back not working again after search
 23-[] Clicking on movie item should bring up a dialog in center focusing on the movie 
