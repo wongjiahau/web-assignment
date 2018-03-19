@@ -24,8 +24,7 @@ class LoginModel extends Model
             return array(
                 'url' => 'retrieveMovie',
                 'session' => array(
-                    'key' => 'adminLoggedIn',
-                    'value' => true
+                    'admin' => $id
                 )
             );
         } else {

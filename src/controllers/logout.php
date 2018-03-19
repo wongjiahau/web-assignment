@@ -13,8 +13,7 @@ class Logout extends Controller
 
     function run()
     {
-        Session::start();
-        Session::destroy();
+        Session::endAdminSession();
         Navigator::goto('login');
         exit;
     }

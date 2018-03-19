@@ -11,6 +11,9 @@ class Login extends Controller
 
     function index()
     {
+        if(Session::getAdmin()) {
+            $this->stateManager->update(array('url' => 'src/retrieveMovie'));
+        }
         $this->view->render('login/index');
     }
 

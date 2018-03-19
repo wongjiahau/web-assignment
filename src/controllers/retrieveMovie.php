@@ -60,8 +60,7 @@ class RetrieveMovie extends Controller
 
     function xhrGetIsAdminSession()
     {
-        Session::start();
-        if(isset($_SESSION["adminLoggedIn"])) {
+        if(Session::getAdmin()) {
             echo "true";
         } else {
             echo "false";

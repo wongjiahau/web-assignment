@@ -2,6 +2,7 @@
 
 require_once(__ROOT__ . '/src/libs/bootstrap.php');
 require_once(__ROOT__ . '/src/libs/controller.php');
+require_once(__ROOT__ . '/src/libs/adminController.php');
 require_once(__ROOT__ . '/src/libs/database.php');
 require_once(__ROOT__ . '/src/libs/model.php');
 require_once(__ROOT__ . '/src/libs/navigator.php');

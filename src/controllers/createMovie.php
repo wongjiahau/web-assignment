@@ -1,5 +1,5 @@
 <?php
-class CreateMovie extends Controller
+class CreateMovie extends AdminController
 {
     function __construct()
     {
@@ -17,10 +17,7 @@ class CreateMovie extends Controller
 
     function index()
     {
-        Session::start();
-        if (!isset($_SESSION["adminLoggedIn"])) {
-            $this->accessForbidden();
-        }
+        parent::checkIfUserIsAuthorized();
         $this->view->render('createMovie/index');
     }
 

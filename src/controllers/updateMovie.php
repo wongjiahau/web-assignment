@@ -1,5 +1,5 @@
 <?php
-class UpdateMovie extends Controller
+class UpdateMovie extends AdminController
 {
     function __construct()
     {
@@ -17,10 +17,7 @@ class UpdateMovie extends Controller
 
     function index()
     {
-        Session::start();
-        if (!isset($_SESSION["adminLoggedIn"])) {
-            $this->accessForbidden();
-        }
+        parent::checkIfUserIsAuthorized();
         $this->view->render('createMovie/index');
         $this->view->injectGlobalConstants(array('CURRENT_movie_id' => $_GET['movie_id']));
     }

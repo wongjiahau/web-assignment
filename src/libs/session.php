@@ -1,19 +1,19 @@
 <?php
 class Session
 {
-    public static function start()
+    private static function start()
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
     }
-    public static function set($key, $value = true)
+    private static function set($key, $value = true)
     {
         Session::start();
         $_SESSION[$key] = $value;
     }
 
-    public static function get($key)
+    private static function get($key)
     {
         Session::start();
         if (isset($_SESSION[$key])) {
@@ -23,9 +23,26 @@ class Session
         }
     }
 
-    public static function destroy()
+    private static function unset($key) 
+    {
+        Session::start();
+        unset($_SESSION[$key]);
+    }
+
+    private static function destroy()
     {
         session_destroy();
     }
 
+    public static function getAdmin() {
+        return Session::get('admin');
+    }
+
+    public static function setAdmin($value) {
+        Session::set('admin', $value);
+    }
+
+    public static function endAdminSession() {
+        Session::unset('admin');
+    }
 }

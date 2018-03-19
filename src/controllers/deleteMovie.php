@@ -1,5 +1,5 @@
 <?php
-class DeleteMovie extends Controller
+class DeleteMovie extends AdminController
 {
     function __construct()
     {
@@ -8,10 +8,7 @@ class DeleteMovie extends Controller
 
     function xhrRun()
     {
-        Session::start();
-        if (!isset($_SESSION["adminLoggedIn"])) {
-            $this->accessForbidden();
-        }
+        parent::checkIfUserIsAuthorized();
         echo $this->model->run($_GET['movie_id']);
     }
 }

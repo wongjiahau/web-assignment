@@ -7,7 +7,7 @@ class StateManager
         $history = array();
     }
 
-    public function getHistory() 
+    public function getHistory()
     {
         return $this->history;
     }
@@ -20,10 +20,18 @@ class StateManager
                     Navigator::goto($value);
                     break;
                 case "session":
-                    Session::set($value['key'], $value['value']);
+                    foreach ($value as $sessionName => $sessionValue) {
+                        switch ($sessionName) {
+                            case "admin":
+                                Session::setAdmin($sessionValue);
+                                break;
+                            default:
+                                throw new Exception("Unknown session name : " . $sessionName);
+                        }
+                    }
                     break;
                 default:
-                    throw new Exception("Unknown state key");
+                    throw new Exception("Unknown state key: " . $key);
             }
         }
         array_push($this->history, $newState);

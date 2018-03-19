@@ -23,7 +23,7 @@
 <div id="header">
     <a class="websiteTitle" href="retrieveMovie"><span class="websiteTitle">AAA Movie Library</span></a>
     <span class="userPanel">
-        <?php if (Session::get('adminLoggedIn')) : ?>
+        <?php if (Session::getAdmin()) : ?>
             <button class='clickable' onclick='window.location="<?php echo URL;?>logout/run"'>Logout</button>
         <?php else : ?>
             <button class='clickable' onclick='window.location="<?php echo URL;?>login"'>Login</button>

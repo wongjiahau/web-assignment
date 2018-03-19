@@ -1,11 +1,14 @@
 <?php
+
 class Controller
 {
     function __construct()
     {
         $this->view = new View();
         $this->stateManager = new StateManager();
+        // $this->checkIfAdminSessionExipred();
     }
+
 
     public function loadModel($name)
     {
