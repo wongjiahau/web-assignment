@@ -1,0 +1,22 @@
+# For more understanding about communication between containers, look at
+# https://docs.docker.com/compose/networking/
+version: '3'
+services:
+  database: # TIPS: This line also means the hostname of this container
+    build: './database'
+    container_name: mydatabase
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+
+
+  webserver: # TIPS: This line also means the hostname of this container
+    build: ./
+    container_name: webserver
+    ports:
+      - 80:80
+    volumes: 
+      - ./src:/var/www/html/src
+    depends_on:
+      - database
+  
