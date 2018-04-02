@@ -1,4 +1,8 @@
 # web-assignment
+## What are the dependencies of this project?
+- `docker`
+- `docker-compose`
+
 ## How to get started?
 Run the code below :
 
