@@ -22,3 +22,4 @@
 21-[] Bug, pressing enter will cause form to submit
 22-[X] Bug, back not working again after search
 23-[] Clicking on movie item should bring up a dialog in center focusing on the movie 
+24-[X] Display error if login failed

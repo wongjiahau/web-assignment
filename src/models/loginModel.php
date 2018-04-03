@@ -29,7 +29,7 @@ class LoginModel extends Model
             );
         } else {
             return array(
-                'url' => 'login'
+                'url' => 'login?error=1'
             );
         }
     }
