@@ -6,11 +6,22 @@
 ## How to get started?
 Run the code below :
 
-```
+```bash
 cd ~
 git clone https://github.com/wongjiahau/web-assignment.git
 cd web-assignment
 ./init-containers.sh
+```
+
+## What if the webserver containers exited after startup?
+```bash
+# Retry the command again
+./init-containers.sh
+```
+
+## How to stop the containers?
+```bash
+docker-compose stop
 ```
 
 ### How to install dependencies?
