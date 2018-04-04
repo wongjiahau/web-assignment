@@ -35,6 +35,7 @@ class Ui {
     }
 
     reportNoMovieFound() {
+        $(Id.pageLinks).html("");
         $(Id.movieList).html("");
         $(Id.movieList).append("<p>No result found.</p>")
         $(Id.movieList).append("<a href='javascript:history.back()'>Click here to go back</a>")

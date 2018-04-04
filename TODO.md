@@ -23,3 +23,4 @@
 22-[X] Bug, back not working again after search
 23-[] Clicking on movie item should bring up a dialog in center focusing on the movie 
 24-[X] Display error if login failed
+25-[X] Page link should be gone when no result is found
