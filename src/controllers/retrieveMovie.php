@@ -12,7 +12,6 @@ class RetrieveMovie extends Controller
             'retrieveMovie/js/handlerInjector.js',
         );
         $this->view->css = array(
-            'retrieveMovie/css/admin.css',
             'retrieveMovie/css/default.css',
             'retrieveMovie/css/movie.css',
             'retrieveMovie/css/pageLink.css'

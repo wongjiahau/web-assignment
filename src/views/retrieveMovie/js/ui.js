@@ -17,6 +17,7 @@ class Ui {
         this.renderWithAdminOptions = renderWithAdminOptions;
         if(renderWithAdminOptions) {
             this.renderCreateMovieButton();
+            this.injectAdminCss();
         }
     }
 
@@ -30,8 +31,6 @@ class Ui {
         movies.forEach(movie => {
             $(Id.movieList).append(x.render(movie));
         });
-        if(this.renderWithAdminOptions) {
-        }
     }
 
     reportNoMovieFound() {
@@ -55,6 +54,11 @@ class Ui {
 
     renderCreateMovieButton() {
         $(Id.createMoviePanel).html(`<button class='clickable createBtn'>Add new movie</button>`);
+    }
+
+    injectAdminCss() {
+        $('<link rel="stylesheet" href="views/retrieveMovie/css/admin.css">')
+            .appendTo('body');
     }
 
     markMovieAsDeleted(movie_id) {

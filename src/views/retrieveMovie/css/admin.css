@@ -27,3 +27,15 @@
     right: 10px;
     z-index: 99;
 }
+
+
+.movieItemTitle {
+    margin-bottom: -13px;
+    margin-top: -6px;
+    font-size: 19px;
+    font-weight: bold;
+    vertical-align: top;
+    word-wrap: break-word;
+    width: 235px;
+    display: block;
+}
