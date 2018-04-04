@@ -54,3 +54,4 @@ bash ./init_database.sh
 
 ## References
 - https://jonsuh.com/blog/securely-hash-passwords-with-php/
+- https://www.youtube.com/watch?v=Aw28-krO7ZM
