@@ -48,6 +48,11 @@ function getGenreOptions() {
 }
 
 function validateForm() {
+    if(!validateFileType()) {
+        alert("ERROR : You can only upload image!");
+        return false;
+    }
+
     function validate(type) {
         const errorMessage = v($(`#${type}Input`).val()).isInvalid[type]();
         $(`#${type}Error`).html(errorMessage);
@@ -60,4 +65,10 @@ function validateForm() {
         validate("Genre") && 
         validate("Synopsis");
     return isValid;
+}
+
+function validateFileType() {
+    const validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
+    const filename = $('#ImageInput').val().toString();
+    return validFileExtensions.some((x) => filename.endsWith(x));
 }
