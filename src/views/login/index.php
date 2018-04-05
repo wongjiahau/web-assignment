@@ -9,5 +9,6 @@
             <?php endif; ?>
             <input class='primary clickable submit' type="submit" value="LOGIN">
         </form>
+        <a id='_goToHome' href='retrieveMovie'>Click here to go to homepage</a>
     </div>
 </div>
