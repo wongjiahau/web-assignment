@@ -4,6 +4,9 @@ class Login extends Controller
     function __construct()
     {
         parent::__construct();
+        $this->view->js = array(
+            'login/js/validate.js',
+        );
         $this->view->css = array(
             'login/css/default.css',
         );
