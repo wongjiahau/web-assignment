@@ -6,6 +6,18 @@
     margin: 0px;
     margin-left: 10px;
     position: relative;
+    transition: box-shadow 0.2s ease-in-out;
+    border-radius: 5px;
+}
+
+/* Transition to a bigger shadow on hover */
+.movieItem:hover {
+  box-shadow: 0 5px 15px black;
+}
+
+hr {
+    margin: 0px;
+    margin-bottom: 10px;
 }
 
 .movieImage {
