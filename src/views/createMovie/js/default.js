@@ -70,5 +70,8 @@ function validateForm() {
 function validateFileType() {
     const validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
     const filename = $('#ImageInput').val().toString();
+    if (filename.length === 0) {
+        return true;
+    }
     return validFileExtensions.some((x) => filename.endsWith(x));
 }
