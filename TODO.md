@@ -19,8 +19,13 @@
 18-[] Ui test with selenium
 19-[X] Admin session should expire in 1 minutes of inactivity
 20-[] Genre is not selected with previous value when updating some movie
-21-[] Bug, pressing enter will cause form to submit
+21-[X] Bug, pressing enter will cause form to submit
 22-[X] Bug, back not working again after search
 23-[] Clicking on movie item should bring up a dialog in center focusing on the movie 
 24-[X] Display error if login failed
 25-[X] Page link should be gone when no result is found
+26-[] Back button should be invisible at the first time
+27-[] Please fix 20
+28-[X] Validate login form
+29-[] Do more screenshots
+30-[X] Validate file input

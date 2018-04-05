@@ -1,4 +1,5 @@
 $(() => {
+    disableFormSubmitOnPressingEnter();
     getYearOptions();
     getGenreOptions();
     injectImageInputHandler();
@@ -6,6 +7,16 @@ $(() => {
         return validateForm();
     });
 });
+
+function disableFormSubmitOnPressingEnter() {
+    $('#createMovieForm').on('keyup keypress', function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+    }
+    });
+}
 
 function injectImageInputHandler() {
     function readURL(input) {

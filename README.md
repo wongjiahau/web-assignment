@@ -19,6 +19,12 @@ cd web-assignment
 ./init-containers.sh
 ```
 
+## If the init-containers.sh still fails 
+Clear all docker images and rebuild it again.
+```
+docker system prune --all
+```
+
 ## How to stop the containers?
 ```bash
 docker-compose stop
