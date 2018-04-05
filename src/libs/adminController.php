@@ -21,7 +21,7 @@ class AdminController extends Controller
             Session::resetAdminLastActivity();
             return;
         }
-        $MAX_LIMIT_IN_SECONDS = 60;
+        $MAX_LIMIT_IN_SECONDS = 180;
         if ((time() - Session::getAdminLastActivity()) > $MAX_LIMIT_IN_SECONDS) {
             Session::endAdminSession();
             Navigator::goto('errorPage/_401');
